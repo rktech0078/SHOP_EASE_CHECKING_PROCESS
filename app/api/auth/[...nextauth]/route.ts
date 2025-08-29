@@ -141,10 +141,10 @@ const handler = NextAuth({
     },
     async jwt({ token, user, account }) {
       if (user) {
-        token.role = user.role || 'customer'
-        token.id = user.id
+        token.role = (user as unknown as Record<string, unknown>).role as string || 'customer'
+        token.id = (user as unknown as Record<string, unknown>).id as string
         token.provider = account?.provider || 'credentials'
-        token.isEmailVerified = user.isEmailVerified || false
+        token.isEmailVerified = (user as unknown as Record<string, unknown>).isEmailVerified as boolean || false
       }
       return token
     },
@@ -166,10 +166,9 @@ const handler = NextAuth({
   },
   pages: {
     signIn: '/auth/signin',
-    signUp: '/auth/signup',
     error: '/auth/error',
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET!,
   debug: process.env.NODE_ENV === 'development',
 })
 

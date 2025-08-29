@@ -58,9 +58,11 @@ const createOrderConfirmationTemplate = (orderData: Record<string, unknown>) => 
   const safeCreatedAt = createdAt as string;
   const safePricing = pricing as Record<string, unknown>;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  safeOrderId;
-  safeItems;
-  safePricing;
+  void safeOrderId;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  void safeItems;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  void safePricing;
   
   return `
     <!DOCTYPE html>
@@ -381,8 +383,9 @@ const createOwnerNotificationTemplate = (orderData: Record<string, unknown>) => 
   const safeCustomer = customer as Record<string, unknown>;
   const safeCreatedAt = createdAt as string;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  safeOrderId;
-  safeItems;
+  void safeOrderId;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  void safeItems;
   
   return `
     <!DOCTYPE html>
