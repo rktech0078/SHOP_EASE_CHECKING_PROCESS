@@ -285,7 +285,7 @@ export default function CartPage() {
                           <div className="relative w-28 h-28 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600 rounded-2xl overflow-hidden shadow-lg transform group-hover:scale-105 transition-all duration-300">
                             {item.product.images && item.product.images.length > 0 ? (
                               <Image
-                                src={urlFor(item.product.images[0]).url()}
+                                src={urlFor(item.product.images[0] as { asset: { _ref: string } }).url()}
                                 alt={item.product.name}
                                 fill
                                 className="object-cover"
