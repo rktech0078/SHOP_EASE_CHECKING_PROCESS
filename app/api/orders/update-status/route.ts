@@ -111,7 +111,7 @@ async function updateOrderStatus(currentOrder: Record<string, unknown>, status: 
 
     // Update the order
     const updatedOrder = await adminClient
-      .patch(currentOrder._id)
+      .patch(currentOrder._id as string)
       .set(updateData)
       .commit();
 
@@ -119,15 +119,16 @@ async function updateOrderStatus(currentOrder: Record<string, unknown>, status: 
 
     // Send email notification to customer
     try {
-      if (currentOrder.customer?.email) {
-        console.log(`📧 Sending email to: ${currentOrder.customer.email}`);
+      const customer = currentOrder.customer as Record<string, unknown>;
+      if (customer?.email) {
+        console.log(`📧 Sending email to: ${customer.email}`);
         
         const emailResult = await sendOrderStatusUpdateEmail(
-          currentOrder.customer.email,
-          currentOrder.customer.fullName || 'Customer',
+          customer.email as string,
+          (customer.fullName as string) || 'Customer',
           {
-            orderId: currentOrder.orderId,
-            totalAmount: currentOrder.totalAmount || 0,
+            orderId: currentOrder.orderId as string,
+            totalAmount: (currentOrder.totalAmount as number) || 0,
             items: []
           },
           status,
