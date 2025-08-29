@@ -27,7 +27,7 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
 
   // Enhanced image URL generation with fallback
   const getImageUrl = () => {
-    if (images && images.length > 0 && !imageError) {
+    if (images && images.length > 0 && !imageError && images[0]) {
       try {
         return urlFor(images[0]).width(400).height(400).quality(85).url();
       } catch (error) {

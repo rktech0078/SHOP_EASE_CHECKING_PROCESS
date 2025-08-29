@@ -7,5 +7,5 @@ export const adminClient = createClient({
   dataset,
   apiVersion,
   useCdn: false,
-  token: process.env.SANITY_API_TOKEN, // Use admin token for write operations
+  token: process.env.SANITY_API_TOKEN!, // Use admin token for write operations
 })
