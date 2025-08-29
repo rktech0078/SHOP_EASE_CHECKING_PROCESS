@@ -7,6 +7,7 @@ import { useCart } from '@/context/CartContext';
 import { Product } from '@/types';
 import { Heart, ShoppingCart, Trash2, Eye, Package, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { toast } from 'react-hot-toast';
 import { ModernLoader } from '@/components/ui/ModernLoader';
 import { urlFor } from '@/sanity/lib/image';
@@ -49,14 +50,16 @@ const WishlistItem = ({ item, onRemove, onAddToCart }: {
     >
       {/* Product Image */}
       <div className="relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-700">
-        <img
+        <Image
           src={
             item.images && item.images.length > 0 && item.images[0]
               ? urlFor(item.images[0]).width(400).height(400).quality(85).url()
               : '/placeholder-product.jpg'
           }
           alt={item.name}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+          fill
+          className="object-cover group-hover:scale-110 transition-transform duration-300"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         {/* Hover Overlay */}
         <div className={`absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2`}>

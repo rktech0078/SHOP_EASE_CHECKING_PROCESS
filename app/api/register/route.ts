@@ -112,7 +112,8 @@ export async function POST(request: NextRequest) {
     
     // Handle specific Sanity errors
     if (error && typeof error === 'object' && 'message' in error) {
-      if (error.message.includes('Insufficient permissions')) {
+      const errorMessage = (error as { message: string }).message;
+      if (errorMessage.includes('Insufficient permissions')) {
         return NextResponse.json(
           { error: 'Database access error. Please try again.' },
           { status: 500 }

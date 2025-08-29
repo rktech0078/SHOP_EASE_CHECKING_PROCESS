@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { formatPrice } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
+import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
 import { 
   User, 
@@ -477,10 +478,12 @@ export default function CheckoutPage() {
                   <div key={index} className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                     <div className="w-12 h-12 bg-gray-200 dark:bg-gray-600 rounded-lg flex-shrink-0 overflow-hidden">
                       {item.product.images && item.product.images.length > 0 ? (
-                        <img
-                          src={urlFor(item.product.images[0]).url()}
+                        <Image
+                          src={urlFor(item.product.images[0] as { asset: { _ref: string } }).url()}
                           alt={item.product.name}
-                          className="w-full h-full object-cover"
+                          fill
+                          className="object-cover"
+                          sizes="48px"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
