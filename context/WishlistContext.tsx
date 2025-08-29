@@ -1,18 +1,10 @@
 'use client';
 import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-
-interface WishlistItem {
-  _id: string;
-  name: string;
-  price: number;
-  image: string;
-  description?: string;
-  category?: string;
-}
+import { Product } from '@/types';
 
 interface WishlistContextType {
-  wishlistItems: WishlistItem[];
-  addToWishlist: (item: WishlistItem) => void;
+  wishlistItems: Product[];
+  addToWishlist: (item: Product) => void;
   removeFromWishlist: (id: string) => void;
   isInWishlist: (id: string) => boolean;
   clearWishlist: () => void;
@@ -41,7 +33,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
     localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
   }, [wishlistItems]);
 
-  const addToWishlist = (item: WishlistItem) => {
+  const addToWishlist = (item: Product) => {
     setWishlistItems(prev => {
       // Check if item already exists
       if (prev.some(existingItem => existingItem._id === item._id)) {

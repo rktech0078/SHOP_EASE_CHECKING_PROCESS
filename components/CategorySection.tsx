@@ -32,10 +32,10 @@ const CategorySection = ({ categories: initialCategories }: CategorySectionProps
         const fetchedCategories = await getCategories();
         setCategories(fetchedCategories);
         setError(null);
-      } catch (err) {
-        console.error('Error fetching categories:', err);
-        setError('Failed to load categories. Please try again later.');
-      } finally {
+              } catch {
+          console.error('Error fetching categories');
+          setError('Failed to load categories. Please try again later.');
+        } finally {
         setIsLoading(false);
       }
     };

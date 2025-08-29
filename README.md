@@ -1,117 +1,293 @@
-# E-Commerce Application
+# ShopEase - E-commerce Platform
 
-## Overview
-A modern e-commerce application built with Next.js 14, Tailwind CSS, and Sanity CMS. This application includes product browsing, cart functionality, checkout process, and an admin dashboard for order management.
+A modern, full-stack e-commerce application built with Next.js, Sanity CMS, and Tailwind CSS.
 
-## Features
+## ✨ Features
 
-### Customer Features
-- Browse products with category filtering and search
-- View detailed product information
-- Add products to cart
-- Checkout process with shipping and payment information
-- Order confirmation and tracking
-- **User Authentication & Account Management**
-  - Secure user registration and login
-  - Personal dashboard with order history
-  - Profile management and address updates
-  - Password-protected account access
+- **Modern UI/UX**: Beautiful, responsive design with smooth animations
+- **Product Management**: Full CRUD operations for products, categories, and banners
+- **User Authentication**: Secure login/signup with NextAuth.js
+- **Shopping Cart**: Persistent cart with real-time updates
+- **Wishlist**: Save favorite products for later
+- **Order Management**: Complete order lifecycle management
+- **Admin Dashboard**: Comprehensive admin panel for store management
+- **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **SEO Optimized**: Built-in SEO features and sitemap generation
 
-### Admin Features
-- Secure admin dashboard
-- View and manage all orders
-- Update order status and payment status
-- View detailed order information
-- **User Management**
-  - View all registered users
-  - Manage user roles and permissions
+## 🚀 Enhanced Loading System
 
-## Technical Stack
+### Overview
+ShopEase now features a comprehensive loading system that provides excellent user experience during navigation and data fetching:
 
-- **Frontend**: Next.js 14, React, Tailwind CSS
-- **Backend/CMS**: Sanity.io
-- **State Management**: React Context API
-- **Authentication**: NextAuth.js with Sanity adapter
-- **Security**: bcryptjs for password hashing, JWT tokens
-- **Database**: Sanity.io (Headless CMS)
+1. **Initial App Loader**: Beautiful startup animation that prevents white screen
+2. **Route Change Loading**: Smooth loading indicators during navigation
+3. **Data Fetching Loading**: Contextual loading states for API calls
+4. **Progress Bar**: Top-of-page progress indicator during navigation
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+### Components
 
-## Getting Started
+#### InitialLoader
+- Shows on first app load
+- Beautiful logo animation with gradient background
+- Prevents white screen flash
+- Auto-hides after 1.5 seconds
+
+#### PageLoader
+- Full-screen loading overlay
+- Different states for route changes vs data loading
+- Animated spinner with progress bar
+- Contextual loading messages
+
+#### LoadingBar
+- Thin progress bar at top of page
+- Shows during route changes
+- Smooth gradient animation
+
+#### LoadingWrapper
+- Wraps individual page content
+- Shows loading state while data fetches
+- Customizable loading text and fallback
+
+### Usage Examples
+
+```tsx
+// In any component
+import { useLoading } from '@/context/LoadingContext';
+
+const MyComponent = () => {
+  const { showLoading, hideLoading, setRouteChanging } = useLoading();
+
+  const handleNavigation = () => {
+    setRouteChanging(true); // Shows route change loading
+  };
+
+  const handleDataFetch = async () => {
+    showLoading('Fetching data...'); // Shows data loading
+    try {
+      // API call
+    } finally {
+      hideLoading(); // Hides loading
+    }
+  };
+
+  return (
+    // Your component JSX
+  );
+};
+```
+
+### Features
+- **Automatic Route Detection**: Automatically shows loading on route changes
+- **Customizable Messages**: Different loading text for different actions
+- **Smooth Animations**: Framer Motion powered animations
+- **Dark Mode Support**: Consistent with app theme
+- **Performance Optimized**: Minimal impact on app performance
+
+## 🛠️ Tech Stack
+
+- **Frontend**: Next.js 15.5.2, React 18, TypeScript
+- **Styling**: Tailwind CSS, Framer Motion
+- **CMS**: Sanity.io
+- **Authentication**: NextAuth.js
+- **Database**: Sanity (MongoDB)
+- **Deployment**: Vercel
+- **Email**: Resend, Nodemailer
+- **Icons**: Lucide React
+
+## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js (v18 or later)
+- Node.js >= 18.0.0
 - npm or yarn
 - Sanity account
+- Vercel account (for deployment)
 
 ### Installation
 
-1. Clone the repository
-2. Install dependencies:
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd SHOP_EASE_CHECKING_PROCESS
+   ```
+
+2. **Install dependencies**
    ```bash
    npm install
-   # or
-   yarn install
-   ```
-3. Set up environment variables:
-   - Create `.env.local` file with the following variables:
-   ```bash
-   NEXTAUTH_SECRET=your-super-secret-key-here
-   NEXTAUTH_URL=http://localhost:3000
-   NEXT_PUBLIC_SANITY_PROJECT_ID=your-sanity-project-id
-   NEXT_PUBLIC_SANITY_DATASET=production
-   SANITY_API_TOKEN=your-sanity-api-token
    ```
 
-4. Run the development server:
+3. **Set up environment variables**
+   Create a `.env.local` file:
+   ```env
+   # Sanity
+   NEXT_PUBLIC_SANITY_PROJECT_ID=your_project_id
+   NEXT_PUBLIC_SANITY_DATASET=production
+   SANITY_API_TOKEN=your_api_token
+   
+   # NextAuth
+   NEXTAUTH_SECRET=your_secret
+   NEXTAUTH_URL=http://localhost:3000
+   
+   # Email (Resend)
+   RESEND_API_KEY=your_resend_api_key
+   
+   # Admin Setup
+   ADMIN_EMAIL=admin@example.com
+   ADMIN_PASSWORD=secure_password
+   ```
+
+4. **Set up Sanity Studio**
+   ```bash
+   npm run sanity:dev
+   ```
+
+5. **Run the development server**
    ```bash
    npm run dev
-   # or
-   yarn dev
    ```
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser
+6. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-## User Dashboard
+## 📱 Admin Setup
 
-Access your personal dashboard at [http://localhost:3000/dashboard](http://localhost:3000/dashboard) after signing in.
+1. **Access admin setup**
+   Navigate to `/admin-setup` on first run
 
-## Admin Dashboard
+2. **Create admin account**
+   - Enter your email and password
+   - This will be your admin credentials
 
-Access the admin dashboard at [http://localhost:3000/admin](http://localhost:3000/admin) using admin credentials.
+3. **Access admin panel**
+   Navigate to `/admin` and login with your credentials
 
-## Authentication
+## 🚀 Deployment
 
-The application includes a complete authentication system:
-- **Sign Up**: `/auth/signup` - Create a new account
-- **Sign In**: `/auth/signin` - Login to existing account
-- **Dashboard**: `/dashboard` - User profile and order management
+### Vercel (Recommended)
 
-## Sanity Studio
+1. **Push to GitHub**
+   ```bash
+   git add .
+   git commit -m "Ready for deployment"
+   git push origin main
+   ```
 
-To manage your content, access the Sanity Studio:
+2. **Connect to Vercel**
+   - Import your GitHub repository
+   - Vercel will auto-detect Next.js
+   - Add environment variables
+   - Deploy!
 
-```bash
-npm run sanity:dev
-# or
-yarn sanity:dev
+### Environment Variables for Production
+Make sure to add all environment variables in your Vercel dashboard:
+- `NEXT_PUBLIC_SANITY_PROJECT_ID`
+- `NEXT_PUBLIC_SANITY_DATASET`
+- `SANITY_API_TOKEN`
+- `NEXTAUTH_SECRET`
+- `NEXTAUTH_URL` (your production URL)
+- `RESEND_API_KEY`
+- `ADMIN_EMAIL`
+- `ADMIN_PASSWORD`
+
+## 🎨 Customization
+
+### Colors and Theme
+Modify `tailwind.config.ts` to customize:
+- Primary colors
+- Dark mode colors
+- Custom animations
+- Font families
+
+### Components
+All components are in the `components/` directory:
+- Reusable UI components in `components/ui/`
+- Page-specific components in `components/`
+- Context providers in `context/`
+
+### Styling
+- Global styles in `app/globals.css`
+- Component-specific styles using Tailwind classes
+- Custom CSS animations for loading states
+
+## 📁 Project Structure
+
+```
+SHOP_EASE_CHECKING_PROCESS/
+├── app/                    # Next.js app directory
+│   ├── admin/             # Admin dashboard
+│   ├── api/               # API routes
+│   ├── auth/              # Authentication pages
+│   ├── products/          # Product pages
+│   └── ...                # Other pages
+├── components/             # React components
+│   ├── ui/                # Reusable UI components
+│   └── ...                # Page components
+├── context/                # React Context providers
+├── lib/                    # Utility functions
+├── sanity/                 # Sanity CMS configuration
+├── types/                  # TypeScript type definitions
+└── public/                 # Static assets
 ```
 
-Then open [http://localhost:3333](http://localhost:3333) in your browser.
+## 🔧 Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run sanity:dev` - Start Sanity Studio
+- `npm run sanity:build` - Build Sanity Studio
+- `npm run sanity:deploy` - Deploy Sanity Studio
 
-## Learn More
+## 🌟 Key Features
 
-To learn more about Next.js, take a look at the following resources:
+### User Experience
+- **Smooth Navigation**: Loading states prevent white screens
+- **Responsive Design**: Works perfectly on all devices
+- **Fast Loading**: Optimized images and code splitting
+- **Accessibility**: WCAG compliant design
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Performance
+- **Image Optimization**: Next.js Image component
+- **Code Splitting**: Automatic route-based splitting
+- **Caching**: Efficient data caching strategies
+- **SEO**: Built-in SEO optimization
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Security
+- **Authentication**: Secure user authentication
+- **Authorization**: Role-based access control
+- **Data Validation**: Input sanitization and validation
+- **HTTPS**: Secure communication
 
-## Deploy on Vercel
+## 🤝 Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 License
+
+This project is licensed under the MIT License.
+
+## 🆘 Support
+
+If you encounter any issues:
+1. Check the documentation
+2. Search existing issues
+3. Create a new issue with details
+4. Contact the development team
+
+## 🎯 Roadmap
+
+- [ ] Multi-language support
+- [ ] Advanced analytics
+- [ ] Mobile app
+- [ ] Payment gateway integration
+- [ ] Inventory management
+- [ ] Customer reviews
+- [ ] Social media integration
+
+---
+
+**Built with ❤️ using Next.js, Sanity, and Tailwind CSS**

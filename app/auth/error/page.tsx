@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/Button';
 import { 
   AlertTriangle, 
   Home, 
-  ArrowLeft, 
   Shield, 
   User, 
   Lock 
@@ -92,7 +91,7 @@ export default function AuthErrorPage() {
             <li>• Check your internet connection</li>
             <li>• Clear your browser cookies and cache</li>
             <li>• Try using a different browser</li>
-            <li>• Ensure you're using the correct credentials</li>
+            <li>• Ensure you&apos;re using the correct credentials</li>
             <li>• Contact support if the problem persists</li>
           </ul>
         </div>

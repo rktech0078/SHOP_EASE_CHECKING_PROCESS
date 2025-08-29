@@ -16,12 +16,6 @@ import { Product as GlobalProduct } from '@/types';
 
 export const dynamic = 'force-dynamic';
 
-interface Category {
-  _id: string;
-  name: string;
-  slug: string | { current: string };
-}
-
 interface ProductPageProps {
   params: { slug: string };
 }
@@ -62,8 +56,8 @@ export default function ProductPage({ params }: ProductPageProps) {
           };
           setProduct(transformedProduct);
         }
-      } catch (error) { 
-        console.error('Error fetching product:', error);
+      } catch { 
+        console.error('Error fetching product');
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -392,7 +386,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                             <span className="font-bold">Limited Time Offer - {safeDiscount}% OFF!</span>
                           </div>
                           <p className="text-red-600 dark:text-red-400 text-sm mt-1">
-                            Hurry! This deal won't last long.
+                            Hurry! This deal won&apos;t last long.
                           </p>
                         </div>
                       </>

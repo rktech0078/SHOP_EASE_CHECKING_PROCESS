@@ -12,7 +12,7 @@ import {
   ShoppingBag,
   Mail,
   Phone,
-  MapPin,
+
   Loader
 } from 'lucide-react';
 
@@ -179,7 +179,7 @@ export default function OrderSuccessPage() {
               </div>
               <div>
                 <h3 className="font-medium text-gray-900 dark:text-gray-100">Order Confirmation</h3>
-                <p className="text-gray-600 dark:text-gray-400">You'll receive an email confirmation with order details</p>
+                <p className="text-gray-600 dark:text-gray-400">You&apos;ll receive an email confirmation with order details</p>
               </div>
             </div>
             
@@ -199,7 +199,7 @@ export default function OrderSuccessPage() {
               </div>
               <div>
                 <h3 className="font-medium text-gray-900 dark:text-gray-100">Shipping & Delivery</h3>
-                <p className="text-gray-600 dark:text-gray-400">You'll get tracking updates via email and SMS</p>
+                <p className="text-gray-600 dark:text-gray-400">You&apos;ll get tracking updates via email and SMS</p>
               </div>
             </div>
           </div>

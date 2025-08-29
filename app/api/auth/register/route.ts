@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
             })
 
                 // Remove sensitive data from response
-            const { password: _, verificationToken: __, ...userWithoutSensitiveData } = user
+            const { password: _password, verificationToken: _token, ...userWithoutSensitiveData } = user
 
     return NextResponse.json(
       { 

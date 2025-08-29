@@ -63,7 +63,7 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
     try {
       await addToCart(product, 1);
       toast.success('Product added to cart!');
-    } catch (error) {
+    } catch {
       toast.error('Failed to add product to cart');
     } finally {
       setIsLoading(false);
@@ -76,17 +76,10 @@ const ProductCard = ({ product, viewMode = 'grid' }: ProductCardProps) => {
         removeFromWishlist(product._id);
         toast.success('Removed from wishlist');
       } else {
-        addToWishlist({
-          _id: product._id,
-          name: product.name,
-          price: product.price,
-          image: imageUrl,
-          description: product.description,
-          category: product.category?.name
-        });
+        addToWishlist(product);
         toast.success('Added to wishlist');
       }
-    } catch (error) {
+    } catch {
       toast.error('Failed to update wishlist');
     }
   };

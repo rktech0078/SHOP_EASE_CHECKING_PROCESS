@@ -150,10 +150,10 @@ const handler = NextAuth({
     },
     async session({ session, token }) {
       if (token && session.user) {
-        (session.user as Record<string, any>).role = token?.role ?? 'customer'
-        ;(session.user as Record<string, any>).id = token?.id ?? ''
-        ;(session.user as Record<string, any>).provider = token?.provider ?? 'credentials'
-        ;(session.user as Record<string, any>).isEmailVerified = token?.isEmailVerified ?? false
+        (session.user as Record<string, unknown>).role = token?.role ?? 'customer'
+        ;(session.user as Record<string, unknown>).id = token?.id ?? ''
+        ;(session.user as Record<string, unknown>).provider = token?.provider ?? 'credentials'
+        ;(session.user as Record<string, unknown>).isEmailVerified = token?.isEmailVerified ?? false
       }
       return session
     },

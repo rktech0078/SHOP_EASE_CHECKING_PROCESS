@@ -8,6 +8,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { NextAuthProvider } from "@/components/NextAuthProvider";
 import { LoadingProvider } from "../context/LoadingContext";
 import { WishlistProvider } from "@/context/WishlistContext";
+import { InitialLoader } from "@/components/ui/ModernLoader";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -71,6 +72,7 @@ export default function RootLayout({
             <LoadingProvider>
               <CartProvider>
                 <WishlistProvider>
+                  <InitialLoader />
                   <Navbar />
                   <main className="pt-16 min-h-screen">{children}</main>
                   <Footer />

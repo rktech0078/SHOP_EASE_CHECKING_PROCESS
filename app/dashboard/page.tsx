@@ -12,7 +12,6 @@ import {
   CheckCircle, 
   Clock, 
   AlertCircle,
-  Eye,
   Calendar,
   MapPin,
   Phone,
@@ -20,7 +19,6 @@ import {
   User,
   ShoppingBag,
   Heart,
-  Settings,
   LogOut,
   RefreshCw
 } from 'lucide-react';
@@ -112,7 +110,7 @@ export default function DashboardPage() {
     if (session?.user?.email) {
       fetchUserOrders();
     }
-  }, [session]);
+  }, [session, fetchUserOrders]);
 
   // Auto-refresh orders every 30 seconds for real-time updates
   useEffect(() => {
@@ -123,7 +121,7 @@ export default function DashboardPage() {
 
       return () => clearInterval(interval);
     }
-  }, [session]);
+  }, [session, fetchUserOrders]);
 
   const fetchUserOrders = async () => {
     try {

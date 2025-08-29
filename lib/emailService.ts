@@ -47,8 +47,16 @@ const createTransporter = async (): Promise<nodemailer.Transporter | null> => {
 };
 
 // Modern, stylish email templates
-const createOrderConfirmationTemplate = (orderData: Record<string, any>) => {
-  const { orderId, totalAmount, items, customer, shipping, createdAt, pricing } = orderData;
+const createOrderConfirmationTemplate = (orderData: Record<string, unknown>) => {
+  const { orderId, totalAmount, items, customer, createdAt, pricing } = orderData;
+  
+  // Type assertions for safe access
+  const safeOrderId = orderId as string;
+  const safeTotalAmount = totalAmount as number;
+  const safeItems = items as Array<Record<string, unknown>>;
+  const safeCustomer = customer as Record<string, unknown>;
+  const safeCreatedAt = createdAt as string;
+  const safePricing = pricing as Record<string, unknown>;
   
   return `
     <!DOCTYPE html>
@@ -278,11 +286,11 @@ const createOrderConfirmationTemplate = (orderData: Record<string, any>) => {
         
         <div class="content">
           <div class="order-card">
-            <div class="order-id">Order #${orderId}</div>
+            <div class="order-id">Order #${safeOrderId}</div>
             <div class="order-grid">
               <div class="detail-item">
                 <div class="detail-label">📅 Order Date</div>
-                <div class="detail-value">${new Date(createdAt).toLocaleDateString('en-US', { 
+                <div class="detail-value">${new Date(safeCreatedAt).toLocaleDateString('en-US', { 
                   year: 'numeric', 
                   month: 'long', 
                   day: 'numeric',
@@ -292,15 +300,15 @@ const createOrderConfirmationTemplate = (orderData: Record<string, any>) => {
               </div>
               <div class="detail-item">
                 <div class="detail-label">👤 Customer</div>
-                <div class="detail-value">${customer.fullName}</div>
+                <div class="detail-value">${safeCustomer.fullName}</div>
               </div>
               <div class="detail-item">
                 <div class="detail-label">📍 Shipping Address</div>
-                <div class="detail-value">${customer.address}, ${customer.city}, ${customer.state} ${customer.zipCode}</div>
+                <div class="detail-value">${safeCustomer.address}, ${safeCustomer.city}, ${safeCustomer.state} ${safeCustomer.zipCode}</div>
               </div>
               <div class="detail-item">
                 <div class="detail-label">💳 Payment Method</div>
-                <div class="detail-value">${pricing?.paymentMethod || 'Online Payment'}</div>
+                <div class="detail-value">${(pricing as Record<string, unknown>)?.paymentMethod as string || 'Online Payment'}</div>
               </div>
             </div>
           </div>
@@ -310,16 +318,16 @@ const createOrderConfirmationTemplate = (orderData: Record<string, any>) => {
               <span class="emoji">📦</span>
               Order Items
             </div>
-            ${items.map((item: Record<string, any>) => `
+            ${safeItems.map((item: Record<string, unknown>) => `
               <div class="item">
-                <div class="item-name">${item.product?.name || 'Product'} × ${item.quantity}</div>
-                <div class="item-price">$${((item.product?.price || 0) * item.quantity).toFixed(2)}</div>
+                <div class="item-name">${(item.product as Record<string, unknown>)?.name || 'Product'} × ${item.quantity}</div>
+                <div class="item-price">$${(((item.product as Record<string, unknown>)?.price as number || 0) * (item.quantity as number)).toFixed(2)}</div>
               </div>
             `).join('')}
           </div>
 
           <div class="total-section">
-            <div class="total-amount">$${totalAmount.toFixed(2)}</div>
+            <div class="total-amount">$${safeTotalAmount.toFixed(2)}</div>
             <div class="total-label">Total Amount</div>
           </div>
 
@@ -359,8 +367,15 @@ const createOrderConfirmationTemplate = (orderData: Record<string, any>) => {
 };
 
 // Owner notification email template
-const createOwnerNotificationTemplate = (orderData: Record<string, any>) => {
+const createOwnerNotificationTemplate = (orderData: Record<string, unknown>) => {
   const { orderId, totalAmount, items, customer, createdAt } = orderData;
+  
+  // Type assertions for safe access
+  const safeOrderId = orderId as string;
+  const safeTotalAmount = totalAmount as number;
+  const safeItems = items as Array<Record<string, unknown>>;
+  const safeCustomer = customer as Record<string, unknown>;
+  const safeCreatedAt = createdAt as string;
   
   return `
     <!DOCTYPE html>
@@ -532,15 +547,15 @@ const createOwnerNotificationTemplate = (orderData: Record<string, any>) => {
               </div>
               <div class="summary-item">
                 <div class="summary-label">Customer</div>
-                <div class="summary-value">${customer.fullName}</div>
+                <div class="summary-value">${(safeCustomer.fullName as string) || 'Unknown Customer'}</div>
               </div>
               <div class="summary-item">
                 <div class="summary-label">Total Amount</div>
-                <div class="summary-value">$${totalAmount.toFixed(2)}</div>
+                <div class="summary-value">$${(safeTotalAmount as number).toFixed(2)}</div>
               </div>
               <div class="summary-item">
                 <div class="summary-label">Order Time</div>
-                <div class="summary-value">${new Date(createdAt).toLocaleDateString('en-US', { 
+                <div class="summary-value">${new Date(safeCreatedAt as string).toLocaleDateString('en-US', { 
                   month: 'short',
                   day: 'numeric',
                   hour: '2-digit',

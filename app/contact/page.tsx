@@ -192,7 +192,7 @@ const ContactPage = () => {
             <div className="bg-white p-8 rounded-3xl shadow-xl">
               <div className="text-center mb-8">
                 <h3 className="text-3xl font-bold text-gray-800 mb-2">Send us a Message</h3>
-                <p className="text-gray-600 text-lg">Fill out the form below and we'll get back to you soon</p>
+                <p className="text-gray-600 text-lg">Fill out the form below and we&apos;ll get back to you soon</p>
               </div>
               
               <div className="space-y-6">

@@ -1,15 +1,10 @@
 import { Metadata } from 'next';
-import Image from 'next/image';
 import HeroSection from '@/components/HeroSection';
 import CategorySection from '@/components/CategorySection';
 import FeaturedProducts from '@/components/FeaturedProducts';
-import { HeroSectionSkeleton } from '@/components/ui/skeleton';
-import CategorySectionLoading from '@/components/CategorySectionLoading';
-import FeaturedProductsLoading from '@/components/FeaturedProductsLoading';
 import { getActiveBanners, getCategories, getFeaturedProducts } from '@/sanity/lib/api';
 import { Suspense } from 'react';
 import { ModernLoader } from '@/components/ui/ModernLoader';
-import { motion } from 'framer-motion';
 
 export const metadata: Metadata = {
   title: 'ShopEase - Your One-Stop E-commerce Shop',
@@ -81,6 +76,9 @@ export default async function Home() {
       return [];
     }),
   ]);
+
+  // Simulate a small delay for better UX
+  await new Promise(resolve => setTimeout(resolve, 100));
 
   return (
     <div className="min-h-screen flex flex-col">

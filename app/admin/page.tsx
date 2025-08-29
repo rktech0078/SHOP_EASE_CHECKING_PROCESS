@@ -125,7 +125,7 @@ export default function AdminDashboard() {
                 Admin Dashboard
               </h1>
               <p className="text-gray-600 dark:text-gray-400 mt-2">
-                Welcome back! Here's what's happening with your store today.
+                Welcome back! Here&apos;s what&apos;s happening with your store today.
               </p>
             </div>
             <div className="flex items-center gap-3">
@@ -383,7 +383,7 @@ export default function AdminDashboard() {
                 <p className="text-gray-500 dark:text-gray-400">No orders yet</p>
               </div>
             ) : (
-              recentOrders.map((order, index) => (
+              recentOrders.map((order) => (
                 <div key={order._id} className="px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">

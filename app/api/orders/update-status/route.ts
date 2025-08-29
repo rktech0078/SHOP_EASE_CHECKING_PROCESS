@@ -17,7 +17,7 @@ async function handleStatusUpdate(request: NextRequest) {
     const body = await request.json();
     console.log('📝 Request body:', body);
     
-    const { orderId, status, description, location } = body;
+    const { orderId, status, description } = body;
 
     // Validate required fields
     if (!orderId || !status) {
@@ -93,12 +93,12 @@ async function handleStatusUpdate(request: NextRequest) {
   }
 }
 
-async function updateOrderStatus(currentOrder: Record<string, any>, status: string, description?: string) {
+async function updateOrderStatus(currentOrder: Record<string, unknown>, status: string, description?: string) {
   try {
     console.log('📝 Updating order with data:', { status, description });
 
     // Prepare update data
-    const updateData: Record<string, any> = {
+    const updateData: Record<string, unknown> = {
       status,
       updatedAt: new Date().toISOString()
     };

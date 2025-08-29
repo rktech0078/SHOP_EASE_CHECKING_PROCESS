@@ -5,16 +5,11 @@ import { getCategories, getProducts } from '@/sanity/lib/api';
 import ProductCard from '@/components/ProductCard';
 import { Category, Product } from '@/types';
 import { Search, SlidersHorizontal, Grid3X3, List, Filter, SortAsc, SortDesc, X, Sparkles, TrendingUp, Star, Package, Zap, RefreshCw } from 'lucide-react';
-import { ModernLoader } from '@/components/ui/ModernLoader';
+import { ModernLoader, LoadingWrapper } from '@/components/ui/ModernLoader';
 
 export const dynamic = 'force-dynamic';
 
-interface ProductsPageProps {
-  searchParams: {
-    category?: string;
-    search?: string;
-  };
-}
+
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -128,7 +123,8 @@ export default function ProductsPage() {
   const stats = getProductStats();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800">
+    <LoadingWrapper isLoading={loading} loadingText="Loading amazing products...">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-950 dark:via-gray-900 dark:to-gray-800">
       {/* Enhanced Header Section */}
       <div className="relative bg-white dark:bg-gray-900/50 border-b border-gray-200/50 dark:border-gray-700/50 backdrop-blur-sm">
         {/* Background Pattern */}
@@ -258,7 +254,7 @@ export default function ProductsPage() {
                   <div className="flex flex-wrap gap-2">
                     {search && (
                       <div className="flex items-center gap-1 px-2 py-1 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 rounded-full text-xs">
-                        Search: "{search}"
+                        Search: &quot;{search}&quot;
                         <button onClick={() => setSearch('')}>
                           <X size={12} />
                         </button>
@@ -467,7 +463,7 @@ export default function ProductsPage() {
                   No products found
                 </h3>
                 <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto text-lg">
-                  We couldn't find any products matching your criteria. Try adjusting your filters or browse all products.
+                  We couldn&apos;t find any products matching your criteria. Try adjusting your filters or browse all products.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button
@@ -511,6 +507,7 @@ export default function ProductsPage() {
           background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(255 255 255 / 0.1)'%3e%3cpath d='m0 .5h32m-32 32v-32'/%3e%3c/svg%3e");
         }
       `}</style>
-    </div>
+      </div>
+    </LoadingWrapper>
   );
 }

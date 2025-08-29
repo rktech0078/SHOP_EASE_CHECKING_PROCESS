@@ -1,13 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWishlist } from '@/context/WishlistContext';
 import { useCart } from '@/context/CartContext';
+import { Product } from '@/types';
 import { Heart, ShoppingCart, Trash2, Eye, Package, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'react-hot-toast';
 import { ModernLoader } from '@/components/ui/ModernLoader';
+import { urlFor } from '@/sanity/lib/image';
 
 // Utility function for price formatting
 const formatPrice = (price: number): string => {
@@ -23,7 +25,6 @@ const WishlistItem = ({ item, onRemove, onAddToCart }: {
   onRemove: (id: string) => void;
   onAddToCart: (item: Product) => void;
 }) => {
-  const [isHovered, setIsHovered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleAddToCart = async () => {
@@ -44,22 +45,23 @@ const WishlistItem = ({ item, onRemove, onAddToCart }: {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       whileHover={{ y: -5 }}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
       className="bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden group hover:shadow-xl transition-all duration-300"
     >
       {/* Product Image */}
       <div className="relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-700">
         <img
-          src={item.image || '/placeholder-product.jpg'}
+          src={
+            item.images && item.images.length > 0 && item.images[0]
+              ? urlFor(item.images[0]).width(400).height(400).quality(85).url()
+              : '/placeholder-product.jpg'
+          }
           alt={item.name}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
         />
-        
         {/* Hover Overlay */}
         <div className={`absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2`}>
           <Link
-            href={`/products/${item.slug || item._id}`}
+            href={`/products/${item.slug?.current || item._id}`}
             className="p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all duration-200 hover:scale-110"
           >
             <Eye size={20} className="text-gray-700" />
@@ -167,25 +169,25 @@ export default function WishlistPage() {
     try {
       clearWishlist();
       toast.success('Wishlist cleared successfully');
-    } catch (error) {
+    } catch {
       toast.error('Failed to clear wishlist');
     } finally {
       setIsClearing(false);
     }
   };
 
-  const handleAddToCart = async (item: any) => {
+  const handleAddToCart = async (item: Product) => {
     try {
       await addToCart({
         _id: item._id,
         name: item.name,
         price: item.price,
-        images: [item.image],
-        inStock: true,
-        slug: { current: item._id }
+        images: item.images || [],
+        inStock: item.inStock || true,
+        slug: item.slug
       }, 1);
-    } catch (error) {
-      throw error;
+    } catch {
+      throw new Error('Failed to add to cart');
     }
   };
 
@@ -263,7 +265,7 @@ export default function WishlistPage() {
             {/* Wishlist Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               <AnimatePresence>
-                {wishlistItems.map((item, index) => (
+                {wishlistItems.map((item) => (
                   <WishlistItem
                     key={item._id}
                     item={item}

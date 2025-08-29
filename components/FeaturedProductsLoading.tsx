@@ -1,4 +1,4 @@
-import { ProductCardSkeleton } from './ui/skeleton';
+
 
 const FeaturedProductsLoading = () => {
   return (

@@ -27,27 +27,6 @@ const HeroSection = ({ banners }: HeroSectionProps) => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Auto-slide banners
-  useEffect(() => {
-    if (banners.length <= 1 || isPaused) return;
-
-    const interval = setInterval(() => {
-      goToNext();
-    }, 6000);
-
-    return () => clearInterval(interval);
-  }, [banners.length, isPaused]);
-
-  // Mouse position tracking for parallax effect
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
   const handleBannerChange = useCallback(
     (getNextIndex: (prev: number) => number) => {
       setIsTransitioning(true);
@@ -68,6 +47,27 @@ const HeroSection = ({ banners }: HeroSectionProps) => {
   const goToNext = useCallback(() => {
     handleBannerChange((prev) => (prev + 1) % banners.length);
   }, [banners.length, handleBannerChange]);
+
+  // Auto-slide banners
+  useEffect(() => {
+    if (banners.length <= 1 || isPaused) return;
+
+    const interval = setInterval(() => {
+      goToNext();
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, [banners.length, isPaused, goToNext]);
+
+  // Mouse position tracking for parallax effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   const togglePause = () => {
     setIsPaused(!isPaused);
@@ -168,6 +168,12 @@ const HeroSection = ({ banners }: HeroSectionProps) => {
   }
 
   const banner = banners[currentBanner];
+  
+  // Early return if no banner
+  if (!banner) {
+    return null;
+  }
+  
   const imageUrl = banner.image ? urlFor(banner.image).url() : '';
 
   // Parallax calculation

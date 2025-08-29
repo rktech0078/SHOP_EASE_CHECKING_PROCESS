@@ -6,12 +6,14 @@ import { useSession, signOut } from 'next-auth/react';
 import { ShoppingCart, User, Menu, X, Search, Heart, Home, Package, Grid3X3, Phone, LogOut, Settings, UserCheck } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
+import { useLoading } from '@/context/LoadingContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
   const { data: session } = useSession();
   const { cartItems } = useCart();
   const { wishlistItems } = useWishlist();
+  const { setRouteChanging } = useLoading();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -31,9 +33,16 @@ export default function Navbar() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // Navigate to products page with search query
+      // Show loading and navigate to products page with search query
+      setRouteChanging(true);
       window.location.href = `/products?search=${encodeURIComponent(searchQuery.trim())}`;
     }
+  };
+
+  const handleNavigation = () => {
+    setRouteChanging(true);
+    // Close mobile menu if open
+    setIsMenuOpen(false);
   };
 
   return (
@@ -43,7 +52,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 group">
+          <Link href="/" onClick={handleNavigation} className="flex items-center space-x-2 group">
             <motion.div 
               className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300"
               whileHover={{ scale: 1.05 }}
@@ -67,6 +76,7 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
+                onClick={handleNavigation}
                 className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 group"
               >
                 <item.icon size={18} className="group-hover:scale-110 transition-transform" />
@@ -261,10 +271,10 @@ export default function Navbar() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={handleNavigation}
                       className="flex flex-col items-center gap-2 p-4 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all duration-200 group border border-gray-100 dark:border-gray-600"
                     >
-                      <item.icon size={24} className="group-hover:scale-110 transition-transform" />
+                      <item.icon size={24} className="group-hover:bg-blue-50 dark:bg-blue-900/20 rounded-lg p-1 transition-all duration-200" />
                       <span className="font-medium text-sm">{item.label}</span>
                     </Link>
                   ))}
@@ -274,7 +284,7 @@ export default function Navbar() {
                 <div className="grid grid-cols-2 gap-3">
                   <Link 
                     href="/cart" 
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={handleNavigation}
                     className="flex items-center gap-3 p-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200 border border-gray-100 dark:border-gray-600"
                   >
                     <ShoppingCart size={20} />
@@ -282,7 +292,7 @@ export default function Navbar() {
                   </Link>
                   <Link 
                     href="/wishlist" 
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={handleNavigation}
                     className="flex items-center gap-3 p-3 text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200 border border-gray-100 dark:border-gray-600"
                   >
                     <Heart size={20} />
@@ -312,7 +322,7 @@ export default function Navbar() {
                     
                     <Link 
                       href="/dashboard" 
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={handleNavigation}
                       className="flex items-center gap-3 p-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
                     >
                       <Settings size={20} />
@@ -320,7 +330,7 @@ export default function Navbar() {
                     </Link>
                     <Link
                       href="/profile"
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={handleNavigation}
                       className="flex items-center gap-3 p-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
                     >
                       <User size={20} />
@@ -341,7 +351,7 @@ export default function Navbar() {
                   <div className="space-y-3 pt-4 border-t border-gray-200">
                     <Link 
                       href="/auth/signin" 
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={handleNavigation}
                       className="flex items-center gap-3 p-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-all duration-200"
                     >
                       <UserCheck size={20} />
