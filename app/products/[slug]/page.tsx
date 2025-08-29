@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, use } from 'react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Minus, Plus, ShoppingCart, Heart, Star, Truck, Shield, ArrowLeft, Share2, Eye, Zap, Award, Clock, CheckCircle, Info, Sparkles, Package, BadgeCheck, TrendingUp } from 'lucide-react';
@@ -17,11 +17,11 @@ import { Product as GlobalProduct } from '@/types';
 export const dynamic = 'force-dynamic';
 
 interface ProductPageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export default function ProductPage({ params }: ProductPageProps) {
-  const { slug } = params;
+  const { slug } = use(params) as { slug: string };
   const [product, setProduct] = useState<GlobalProduct | null>(null);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
@@ -49,7 +49,7 @@ export default function ProductPage({ params }: ProductPageProps) {
             images: productData.images || [],
             categories: productData.categories?.map((category: { _ref: string; _id: string; slug: { current: string } | string; name: string }) => ({
               _id: category._ref || category._id,
-              slug: typeof category.slug === 'string' ? category.slug : category.slug?.current || '',
+              slug: { current: typeof category.slug === 'string' ? category.slug : category.slug?.current || '' },
               name: category.name,
               _ref: category._ref || category._id,
             })) || [],
@@ -115,7 +115,7 @@ export default function ProductPage({ params }: ProductPageProps) {
       await addToCart(product, quantity);
       // Add some visual feedback
       setTimeout(() => setAddToCartLoading(false), 1000);
-    } catch (error) {
+    } catch {
       setAddToCartLoading(false);
     }
   };
@@ -190,7 +190,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                     {images.length > 0 ? (
                       <>
                         <Image
-                          src={urlFor(images[activeImageIndex] ?? images[0]).url()}
+                          src={urlFor((images[activeImageIndex] ?? images[0]) as { asset: { _ref: string } }).url()}
                           alt={product.name || 'Product Image'}
                           fill
                           className={`object-cover transition-all duration-700 ${

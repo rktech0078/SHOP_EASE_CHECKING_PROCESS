@@ -63,7 +63,7 @@ const CategorySection = ({ categories: initialCategories }: CategorySectionProps
                 setError(null);
                 getCategories()
                   .then(categories => setCategories(categories))
-                  .catch(err => setError('Failed to load categories. Please try again later.'))
+                  .catch(() => setError('Failed to load categories. Please try again later.'))
                   .finally(() => setIsLoading(false));
               }}
               className="px-4 py-2 bg-primary text-white rounded hover:bg-primary/90 transition-colors"

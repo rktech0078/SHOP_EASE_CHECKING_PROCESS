@@ -32,7 +32,7 @@ const WishlistItem = ({ item, onRemove, onAddToCart }: {
     try {
       await onAddToCart(item);
       toast.success('Added to cart successfully!');
-    } catch (error) {
+    } catch {
       toast.error('Failed to add to cart');
     } finally {
       setIsLoading(false);

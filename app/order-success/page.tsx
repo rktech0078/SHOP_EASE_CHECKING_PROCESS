@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
+import { Order } from '@/types';
 import { 
   CheckCircle, 
   Package, 
@@ -12,7 +13,6 @@ import {
   ShoppingBag,
   Mail,
   Phone,
-
   Loader
 } from 'lucide-react';
 
@@ -85,7 +85,7 @@ export default function OrderSuccessPage() {
             Order Information Not Found
           </h1>
           <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
-            We couldn't find your order details. This might happen if you refreshed the page or navigated directly here.
+            We couldn&apos;t find your order details. This might happen if you refreshed the page or navigated directly here.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/dashboard">

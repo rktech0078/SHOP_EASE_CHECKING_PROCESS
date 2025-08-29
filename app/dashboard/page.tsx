@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { formatPrice } from '@/lib/utils';
@@ -123,7 +123,7 @@ export default function DashboardPage() {
     }
   }, [session, fetchUserOrders]);
 
-  const fetchUserOrders = async () => {
+  const fetchUserOrders = useCallback(async () => {
     try {
       setLoading(true);
       const response = await fetch(`/api/user/orders?email=${session?.user?.email}`);
@@ -154,7 +154,7 @@ export default function DashboardPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [session?.user?.email]);
 
   const refreshOrders = async () => {
     setRefreshing(true);

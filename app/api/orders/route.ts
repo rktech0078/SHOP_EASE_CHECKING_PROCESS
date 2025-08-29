@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { adminClient } from '@/sanity/lib/adminClient';
 
 export async function GET() {

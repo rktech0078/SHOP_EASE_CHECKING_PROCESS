@@ -57,6 +57,10 @@ const createOrderConfirmationTemplate = (orderData: Record<string, unknown>) => 
   const safeCustomer = customer as Record<string, unknown>;
   const safeCreatedAt = createdAt as string;
   const safePricing = pricing as Record<string, unknown>;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  safeOrderId;
+  safeItems;
+  safePricing;
   
   return `
     <!DOCTYPE html>
@@ -376,6 +380,9 @@ const createOwnerNotificationTemplate = (orderData: Record<string, unknown>) => 
   const safeItems = items as Array<Record<string, unknown>>;
   const safeCustomer = customer as Record<string, unknown>;
   const safeCreatedAt = createdAt as string;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  safeOrderId;
+  safeItems;
   
   return `
     <!DOCTYPE html>
@@ -592,7 +599,7 @@ const createOwnerNotificationTemplate = (orderData: Record<string, unknown>) => 
 export const sendOrderConfirmationEmail = async (
   customerEmail: string,
   customerName: string,
-  orderData: Record<string, any>
+  orderData: Record<string, unknown>
 ): Promise<{ success: boolean; message: string; error?: string }> => {
   try {
     const transporter = await createTransporter();
@@ -640,7 +647,7 @@ export const sendOrderConfirmationEmail = async (
 export const sendOrderStatusUpdateEmail = async (
   customerEmail: string,
   customerName: string,
-  orderData: Record<string, any>,
+  orderData: Record<string, unknown>,
   newStatus: string,
   description: string
 ): Promise<{ success: boolean; message: string; error?: string }> => {
