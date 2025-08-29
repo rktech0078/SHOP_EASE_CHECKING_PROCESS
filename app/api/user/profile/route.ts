@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { adminClient } from '@/sanity/lib/adminClient';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Get user session for authentication
     const session = await getServerSession();

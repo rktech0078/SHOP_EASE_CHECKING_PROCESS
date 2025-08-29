@@ -47,7 +47,7 @@ const createTransporter = async (): Promise<nodemailer.Transporter | null> => {
 };
 
 // Modern, stylish email templates
-const createOrderConfirmationTemplate = (orderData: any) => {
+const createOrderConfirmationTemplate = (orderData: Record<string, any>) => {
   const { orderId, totalAmount, items, customer, shipping, createdAt, pricing } = orderData;
   
   return `
@@ -310,7 +310,7 @@ const createOrderConfirmationTemplate = (orderData: any) => {
               <span class="emoji">📦</span>
               Order Items
             </div>
-            ${items.map((item: any) => `
+            ${items.map((item: Record<string, any>) => `
               <div class="item">
                 <div class="item-name">${item.product?.name || 'Product'} × ${item.quantity}</div>
                 <div class="item-price">$${((item.product?.price || 0) * item.quantity).toFixed(2)}</div>
@@ -359,7 +359,7 @@ const createOrderConfirmationTemplate = (orderData: any) => {
 };
 
 // Owner notification email template
-const createOwnerNotificationTemplate = (orderData: any) => {
+const createOwnerNotificationTemplate = (orderData: Record<string, any>) => {
   const { orderId, totalAmount, items, customer, createdAt } = orderData;
   
   return `
@@ -577,7 +577,7 @@ const createOwnerNotificationTemplate = (orderData: any) => {
 export const sendOrderConfirmationEmail = async (
   customerEmail: string,
   customerName: string,
-  orderData: any
+  orderData: Record<string, any>
 ): Promise<{ success: boolean; message: string; error?: string }> => {
   try {
     const transporter = await createTransporter();
@@ -625,7 +625,7 @@ export const sendOrderConfirmationEmail = async (
 export const sendOrderStatusUpdateEmail = async (
   customerEmail: string,
   customerName: string,
-  orderData: any,
+  orderData: Record<string, any>,
   newStatus: string,
   description: string
 ): Promise<{ success: boolean; message: string; error?: string }> => {

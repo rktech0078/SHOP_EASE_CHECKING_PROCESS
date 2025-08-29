@@ -197,7 +197,7 @@ export async function POST(request: NextRequest) {
     };
 
     // Check if address already exists
-    const addressExists = user.addresses?.some((addr: any) => 
+    const addressExists = user.addresses?.some((addr: { street: string; city: string; state: string; zipCode: string }) => 
       addr.street === newAddress.street &&
       addr.city === newAddress.city &&
       addr.state === newAddress.state &&
@@ -270,7 +270,7 @@ export async function POST(request: NextRequest) {
     
     // Handle specific Sanity errors
     if (error && typeof error === 'object' && 'message' in error) {
-      if ((error as any).message.includes('Insufficient permissions')) {
+      if ((error as { message: string }).message.includes('Insufficient permissions')) {
         return NextResponse.json(
           { error: 'Database access error. Please try again.' },
           { status: 500 }

@@ -19,9 +19,9 @@ const formatPrice = (price: number): string => {
 
 // Wishlist Item Card Component
 const WishlistItem = ({ item, onRemove, onAddToCart }: {
-  item: any;
+  item: Product;
   onRemove: (id: string) => void;
-  onAddToCart: (item: any) => void;
+  onAddToCart: (item: Product) => void;
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

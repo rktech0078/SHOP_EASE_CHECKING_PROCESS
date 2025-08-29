@@ -71,10 +71,10 @@ export async function GET(request: NextRequest) {
     console.log(`📋 Fetched ${orders?.length || 0} orders from Sanity`);
 
     // Transform orders to match expected structure
-    const transformedOrders = orders?.map((order: any) => ({
+    const transformedOrders = orders?.map((order: Record<string, any>) => ({
       _id: order._id,
       orderId: order.orderId,
-      items: order.items?.map((item: any) => ({
+      items: order.items?.map((item: Record<string, any>) => ({
         _id: item._id,
         productId: item.productId || item.product?._id,
         product: item.product,

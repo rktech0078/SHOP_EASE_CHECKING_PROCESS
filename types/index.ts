@@ -15,9 +15,10 @@ export interface Product {
     };
   }[];
   categories: {
-    _id: Key | null | undefined;
-    slug: any;
-    slug: any;
+    _id: string;
+    slug: {
+      current: string;
+    };
     name: string;
     _ref: string;
   }[];
@@ -63,7 +64,7 @@ export interface Banner {
 
 // Order Item Type
 export interface OrderItem {
-  name: ReactI18NextChildren | Iterable<ReactI18NextChildren>;
+  name: string;
   productId: string;
   productName: string;
   quantity: number;

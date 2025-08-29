@@ -53,7 +53,7 @@ export default function ProductPage({ params }: ProductPageProps) {
           const transformedProduct: GlobalProduct = {
             ...productData,
             images: productData.images || [],
-            categories: productData.categories?.map((category: any) => ({
+            categories: productData.categories?.map((category: { _ref: string; _id: string; slug: { current: string } | string; name: string }) => ({
               _id: category._ref || category._id,
               slug: typeof category.slug === 'string' ? category.slug : category.slug?.current || '',
               name: category.name,

@@ -5,8 +5,6 @@ import { useRouter } from 'next/navigation';
 import {
   Package,
   User,
-  Mail,
-  Phone,
   DollarSign,
   CheckCircle,
   Clock,
@@ -26,7 +24,11 @@ interface OrderItem {
     name: string;
     price: number;
     discount?: number;
-    images?: any[];
+    images?: Array<{
+    asset: {
+      _ref: string;
+    };
+  }>;
   };
   quantity: number;
   price: number;

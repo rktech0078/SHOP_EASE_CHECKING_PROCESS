@@ -19,7 +19,7 @@ import {
 export default function OrderSuccessPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [orderDetails, setOrderDetails] = useState<any>(null);
+  const [orderDetails, setOrderDetails] = useState<Order | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

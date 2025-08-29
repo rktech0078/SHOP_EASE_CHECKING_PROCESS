@@ -5,11 +5,12 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { 
   Package, Users, DollarSign, TrendingUp, 
-  ShoppingCart, Eye, Settings, LogOut,
+  ShoppingCart, LogOut,
   ArrowRight, RefreshCw, Calendar, MapPin
 } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { ModernLoader } from '@/components/ui/ModernLoader';
+import { Order } from '@/types';
 
 interface DashboardStats {
   totalOrders: number;
@@ -31,7 +32,7 @@ export default function AdminDashboard() {
     averageOrderValue: 0
   });
   const [loading, setLoading] = useState(true);
-  const [recentOrders, setRecentOrders] = useState<any[]>([]);
+  const [recentOrders, setRecentOrders] = useState<Order[]>([]);
 
   // Check admin authentication
   useEffect(() => {
@@ -53,16 +54,16 @@ export default function AdminDashboard() {
         const orders = ordersData.orders || [];
         
         // Calculate stats
-        const totalRevenue = orders.reduce((acc: number, order: any) => {
+        const totalRevenue = orders.reduce((acc: number, order: Order) => {
           const amount = typeof order.totalAmount === 'number' ? order.totalAmount : 0;
           return order.paymentStatus === 'paid' ? acc + amount : acc;
         }, 0);
         
-        const pendingOrders = orders.filter((o: any) => o.status === 'pending').length;
-        const completedOrders = orders.filter((o: any) => o.status === 'delivered').length;
+        const pendingOrders = orders.filter((o: Order) => o.status === 'pending').length;
+        const completedOrders = orders.filter((o: Order) => o.status === 'delivered').length;
         
         // Get unique customers
-        const uniqueCustomers = new Set(orders.map((o: any) => o.customer.email)).size;
+        const uniqueCustomers = new Set(orders.map((o: Order) => o.customer.email)).size;
         
         setStats({
           totalOrders: orders.length,
@@ -340,7 +341,7 @@ export default function AdminDashboard() {
           >
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-xl flex items-center justify-center">
-                <Settings size={32} className="text-purple-600 dark:text-purple-400" />
+                <Package size={32} className="text-purple-600 dark:text-purple-400" />
               </div>
               <div className="flex-1">
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">

@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { getOrderById } from '@/sanity/lib/api';
 import { Order } from '@/types';
 import { Button } from '@/components/ui/Button';
-import { ModernLoader, SkeletonLoader } from '@/components/ui/ModernLoader';
+import { ModernLoader } from '@/components/ui/ModernLoader';
 import { ArrowLeft, Package, User, Calendar, CreditCard, MapPin, Phone, Mail, Truck, CheckCircle, Clock, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -91,7 +91,7 @@ export default function OrderDetailsPage() {
       });
 
       if (response.ok) {
-        setOrder(prev => prev ? { ...prev, status: newStatus as any } : null);
+        setOrder(prev => prev ? { ...prev, status: newStatus as Order['status'] } : null);
         // Show success message
       } else {
         throw new Error('Failed to update status');

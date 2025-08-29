@@ -68,18 +68,19 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     )
 
-            } catch (error: any) {
+            } catch (error: unknown) {
             console.error('Registration error:', error)
             
             // Handle specific Sanity errors
-            if (error.message?.includes('Insufficient permissions')) {
+            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+            if (errorMessage.includes('Insufficient permissions')) {
               return NextResponse.json(
                 { error: 'Server configuration error. Please contact administrator.' },
                 { status: 500 }
               )
             }
             
-            if (error.message?.includes('duplicate key')) {
+            if (errorMessage.includes('duplicate key')) {
               return NextResponse.json(
                 { error: 'User with this email already exists' },
                 { status: 409 }
@@ -87,7 +88,7 @@ export async function POST(request: NextRequest) {
             }
             
             return NextResponse.json(
-              { error: error.message || 'Internal server error' },
+              { error: errorMessage || 'Internal server error' },
               { status: 500 }
             )
           }
