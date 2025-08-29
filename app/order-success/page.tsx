@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
@@ -16,7 +16,7 @@ import {
   Loader
 } from 'lucide-react';
 
-export default function OrderSuccessPage() {
+function OrderSuccessContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [orderDetails, setOrderDetails] = useState<Order | null>(null);
@@ -251,5 +251,21 @@ export default function OrderSuccessPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function OrderSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center py-12 px-4">
+        <div className="text-center">
+          <div className="w-20 h-20 bg-blue-100 dark:bg-blue-900 rounded-full animate-pulse mx-auto mb-6"></div>
+          <div className="h-8 bg-blue-200 dark:bg-blue-800 rounded animate-pulse w-64 mx-auto mb-4"></div>
+          <div className="h-4 bg-blue-200 dark:bg-blue-800 rounded animate-pulse w-96 mx-auto"></div>
+        </div>
+      </div>
+    }>
+      <OrderSuccessContent />
+    </Suspense>
   );
 }
