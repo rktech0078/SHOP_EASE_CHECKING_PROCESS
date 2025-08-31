@@ -28,11 +28,13 @@ export default defineType({
     }),
     defineField({
       name: 'image',
-      title: 'Image',
+      title: 'Category Image (400x400px recommended)',
       type: 'image',
       options: {
         hotspot: true,
       },
+      description: 'Upload a square image for best display. Recommended size: 400x400px or 500x500px',
+      validation: (Rule) => Rule.required().warning('Category image is recommended for better user experience'),
     }),
   ],
   preview: {

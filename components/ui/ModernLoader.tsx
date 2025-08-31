@@ -91,10 +91,14 @@ export const PageLoader = ({ isRouteChange = false }: { isRouteChange?: boolean 
     <div className="flex flex-col items-center space-y-6">
       {/* Main Spinner */}
       <div className="relative">
-        <div className="w-20 h-20 border-4 border-blue-200 dark:border-gray-700 rounded-full animate-spin">
-          <div className="absolute inset-0 w-20 h-20 border-4 border-transparent border-t-blue-600 dark:border-t-blue-400 rounded-full animate-spin"></div>
-        </div>
-        <div className="absolute inset-0 w-20 h-20 border-4 border-transparent border-r-purple-600 dark:border-r-purple-400 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
+        {/* Outer Circle - Base */}
+        <div className="w-20 h-20 border-4 border-blue-200 dark:border-gray-700 rounded-full animate-spin"></div>
+        {/* Inner Circle - Top Border, Rotates in opposite direction */}
+        <div className="absolute inset-0 w-20 h-20 border-4 border-transparent border-t-blue-600 dark:border-t-blue-400 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.2s' }}></div>
+        {/* Middle Circle - Right Border, Rotates in same direction as outer */}
+        <div className="absolute inset-2 w-16 h-16 border-4 border-transparent border-r-purple-600 dark:border-r-purple-400 rounded-full animate-spin" style={{ animationDuration: '0.8s' }}></div>
+        {/* Center Circle - Bottom Border, Rotates in opposite direction */}
+        <div className="absolute inset-4 w-12 h-12 border-4 border-transparent border-b-green-600 dark:border-b-green-400 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }}></div>
       </div>
       
       {/* Loading Text */}
@@ -162,7 +166,7 @@ export const InitialLoader = () => {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="w-24 h-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-2xl"
         >
-          <span className="text-white font-bold text-4xl">S</span>
+          <span className="text-white font-bold text-4xl">R</span>
         </motion.div>
 
         {/* App Name */}
@@ -173,7 +177,7 @@ export const InitialLoader = () => {
           className="text-center"
         >
           <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-            ShopEase
+            Rushk
           </h1>
           <p className="text-gray-600 dark:text-gray-400 text-lg">
             Your One-Stop Shopping Destination
@@ -187,8 +191,13 @@ export const InitialLoader = () => {
           transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
           className="flex flex-col items-center space-y-4"
         >
-          <div className="w-16 h-16 border-4 border-blue-200 dark:border-gray-700 rounded-full animate-spin">
-            <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-t-blue-600 dark:border-t-blue-400 rounded-full animate-spin"></div>
+          <div className="relative w-16 h-16">
+            {/* Outer Circle */}
+            <div className="absolute inset-0 w-16 h-16 border-4 border-blue-200 dark:border-gray-700 rounded-full animate-spin"></div>
+            {/* Inner Circle - Rotates in opposite direction */}
+            <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-t-blue-600 dark:border-t-blue-400 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.2s' }}></div>
+            {/* Middle Circle - Rotates in same direction as outer */}
+            <div className="absolute inset-2 w-12 h-12 border-4 border-transparent border-r-purple-600 dark:border-r-purple-400 rounded-full animate-spin" style={{ animationDuration: '0.8s' }}></div>
           </div>
           <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">
             Preparing your shopping experience...
@@ -232,3 +241,5 @@ export const LoadingBar = ({ isVisible }: { isVisible: boolean }) => {
     </div>
   );
 };
+
+

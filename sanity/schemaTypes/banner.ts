@@ -18,12 +18,21 @@ export default defineType({
     }),
     defineField({
       name: 'image',
-      title: 'Image',
+      title: 'Desktop Image (1920x600px)',
       type: 'image',
       options: {
         hotspot: true,
       },
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'mobileImage',
+      title: 'Mobile Image (750x1000px)',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      description: 'Optional: Upload mobile-optimized banner image',
     }),
     defineField({
       name: 'buttonText',

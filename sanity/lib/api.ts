@@ -300,6 +300,7 @@ export async function getActiveBanners(): Promise<Banner[]> {
         title,
         subtitle,
         image,
+        mobileImage,
         buttonText,
         buttonLink,
         isActive

@@ -56,7 +56,7 @@ export default async function CategoriesPage() {
                 
                 return (
                   <Link 
-                    href={`/products?category=${category._id}`} 
+                    href={`/categories/${category.slug?.current || category._id}`} 
                     key={category._id}
                     className={`group bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 animate-fade-in animation-delay-${animationDelay}`}
                   >

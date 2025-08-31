@@ -52,7 +52,14 @@ export interface Banner {
   _createdAt: string;
   title: string;
   subtitle?: string;
-  image: {
+  // Desktop Banner (1920x600px recommended)
+  image?: {
+    asset: {
+      _ref: string;
+    };
+  };
+  // Mobile Banner (750x1000px recommended)
+  mobileImage?: {
     asset: {
       _ref: string;
     };
