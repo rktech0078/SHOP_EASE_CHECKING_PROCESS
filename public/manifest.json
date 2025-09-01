@@ -1,0 +1,27 @@
+{
+  "name": "Rushk.pk - Premium Pakistani Clothing Brand",
+  "short_name": "Rushk.pk",
+  "description": "Discover the latest Pakistani fashion trends at Rushk.pk. Shop premium clothing, traditional wear, modern fashion, and stylish accessories.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/images/rushk-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/images/rushk-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["fashion", "shopping", "lifestyle"],
+  "lang": "en",
+  "dir": "ltr"
+}

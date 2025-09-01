@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://rushk.vercel.app/',
+  siteUrl: process.env.SITE_URL || 'https://rushk.pk/',
   generateRobotsTxt: true,
   generateIndexSitemap: false,
   exclude: ['/admin/*', '/studio/*', '/api/*'],
@@ -13,7 +13,7 @@ module.exports = {
       },
     ],
     additionalSitemaps: [
-      'https://rushk.vercel.app/sitemap.xml',
+      'https://rushk.pk/sitemap.xml',
     ],
   },
   changefreq: 'daily',

@@ -13,11 +13,11 @@ interface MetadataHeadProps {
 }
 
 const MetadataHead = ({
-  title = 'ShopEase - Your One-Stop Online Shopping Destination',
-  description = 'Discover quality products at affordable prices. Shop electronics, fashion, home goods and more with fast shipping and secure checkout.',
-  keywords = 'online shopping, ecommerce, electronics, fashion, home goods, affordable products',
-  ogImage = '/images/og-image.jpg',
-  ogUrl = 'https://shopease.com',
+  title = 'Rushk.pk - Premium Pakistani Clothing Brand | Fashion & Style',
+  description = 'Discover the latest Pakistani fashion trends at Rushk.pk. Shop premium clothing, traditional wear, modern fashion, and stylish accessories. Free shipping across Pakistan.',
+  keywords = 'Pakistani clothing, Pakistani fashion, traditional wear, modern fashion, online clothing store, Pakistani dresses, shalwar kameez, western wear, fashion accessories, Pakistan fashion',
+  ogImage = '/images/rushk-og-image.jpg',
+  ogUrl = 'https://rushk.pk',
   canonical,
 }: MetadataHeadProps) => {
   // Update page title dynamically

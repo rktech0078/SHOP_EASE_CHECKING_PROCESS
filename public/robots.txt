@@ -1,0 +1,12 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /admin/*
+Disallow: /studio/*
+Disallow: /api/*
+
+# Host
+Host: https://rushk.pk/
+
+# Sitemaps
+Sitemap: https://rushk.pk/sitemap.xml

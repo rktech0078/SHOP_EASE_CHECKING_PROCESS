@@ -7,8 +7,34 @@ import { Suspense } from 'react';
 import { ModernLoader } from '@/components/ui/ModernLoader';
 
 export const metadata: Metadata = {
-  title: 'ShopEase - Your One-Stop E-commerce Shop',
-  description: 'Shop the latest products at affordable prices with ShopEase',
+  title: 'Rushk.pk - Premium Pakistani Clothing Brand | Fashion & Style',
+  description: 'Discover the latest Pakistani fashion trends at Rushk.pk. Shop premium clothing, traditional wear, modern fashion, and stylish accessories. Free shipping across Pakistan.',
+  keywords: 'Pakistani clothing, Pakistani fashion, traditional wear, modern fashion, online clothing store, Pakistani dresses, shalwar kameez, western wear, fashion accessories, Pakistan fashion',
+  openGraph: {
+    title: 'Rushk.pk - Premium Pakistani Clothing Brand',
+    description: 'Discover the latest Pakistani fashion trends at Rushk.pk. Shop premium clothing, traditional wear, modern fashion, and stylish accessories.',
+    url: 'https://rushk.pk',
+    siteName: 'Rushk.pk',
+    images: [
+      {
+        url: '/images/rushk-home-og.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Rushk.pk - Premium Pakistani Clothing Brand',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Rushk.pk - Premium Pakistani Clothing Brand',
+    description: 'Discover the latest Pakistani fashion trends at Rushk.pk. Shop premium clothing, traditional wear, modern fashion, and stylish accessories.',
+    images: ['/images/rushk-home-twitter.jpg'],
+  },
+  alternates: {
+    canonical: 'https://rushk.pk',
+  },
 };
 
 export const revalidate = 3600; // Revalidate at most every hour
