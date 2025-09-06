@@ -11,7 +11,11 @@ const createTransporter = async (): Promise<nodemailer.Transporter | null> => {
         auth: {
           user: process.env.SMTP_USER,
           pass: process.env.SMTP_PASS
-        }
+        },
+        pool: true,
+        maxConnections: 1,
+        rateDelta: 20000,
+        rateLimit: 5
       });
 
       // Verify connection
@@ -67,7 +71,7 @@ const createOrderConfirmationTemplate = (orderData: Record<string, unknown>) => 
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Order Confirmation - ShopEase</title>
+      <title>Order Confirmation - Rushk</title>
       <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -323,14 +327,18 @@ const createOrderConfirmationTemplate = (orderData: Record<string, unknown>) => 
             </div>
             ${safeItems.map((item: Record<string, unknown>) => `
               <div class="item">
-                <div class="item-name">${(item.product as Record<string, unknown>)?.name || 'Product'} × ${item.quantity}</div>
-                <div class="item-price">$${(((item.product as Record<string, unknown>)?.price as number || 0) * (item.quantity as number)).toFixed(2)}</div>
+                <div class="item-name">
+                  ${item.productName || 'Product'} × ${item.quantity}
+                  ${item.selectedSize ? `<br><small style="color: #64748b;">Size: ${item.selectedSize}</small>` : ''}
+                  ${item.selectedColor ? `<br><small style="color: #64748b;">Color: ${item.selectedColor}</small>` : ''}
+                </div>
+                <div class="item-price">Rs ${((item.finalPrice as number || 0) * (item.quantity as number)).toFixed(2)}</div>
               </div>
             `).join('')}
           </div>
 
           <div class="total-section">
-            <div class="total-amount">$${safeTotalAmount.toFixed(2)}</div>
+            <div class="total-amount">Rs ${safeTotalAmount.toFixed(2)}</div>
             <div class="total-label">Total Amount</div>
           </div>
 
@@ -352,15 +360,15 @@ const createOrderConfirmationTemplate = (orderData: Record<string, unknown>) => 
         </div>
 
         <div class="footer">
-          <h3>🛍️ ShopEase</h3>
+          <h3>🛍️ Rushk</h3>
           <div class="social-links">
             <a href="#" class="social-link">Website</a>
             <a href="#" class="social-link">Support</a>
             <a href="#" class="social-link">Track Order</a>
           </div>
           <div class="contact-info">
-            Need help? Contact us at support@shopease.com<br>
-            © 2024 ShopEase. All rights reserved.
+            Need help? Contact us at support@rushk.com<br>
+© 2024 Rushk. All rights reserved.
           </div>
         </div>
       </div>
@@ -388,7 +396,7 @@ const createOwnerNotificationTemplate = (orderData: Record<string, unknown>) => 
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>New Order Notification - ShopEase</title>
+      <title>New Order Notification - Rushk</title>
       <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -581,10 +589,10 @@ const createOwnerNotificationTemplate = (orderData: Record<string, unknown>) => 
         </div>
 
         <div class="footer">
-          <h3>🛍️ ShopEase Admin</h3>
+          <h3>🛍️ Rushk Admin</h3>
           <div class="contact-info">
-            This is an automated notification from your ShopEase store<br>
-            © 2024 ShopEase. All rights reserved.
+            This is an automated notification from your Rushk store<br>
+© 2025 Rushk. All rights reserved.
           </div>
         </div>
       </div>
@@ -606,7 +614,7 @@ export const sendOrderConfirmationEmail = async (
       // Fallback to console logging
       console.log('📧 Order Confirmation Email (Console Fallback):');
       console.log('To:', customerEmail);
-      console.log('Subject: Order Confirmation - ShopEase');
+      console.log('Subject: Order Confirmation - Rushk');
       console.log('Content:', createOrderConfirmationTemplate(orderData));
       return { success: true, message: 'Email logged to console (SMTP not configured)' };
     }
@@ -615,9 +623,9 @@ export const sendOrderConfirmationEmail = async (
     
     // Send to customer
     await transporter.sendMail({
-      from: `"ShopEase" <${process.env.SMTP_USER}>`,
+      from: `"Rushk" <${process.env.SMTP_USER}>`,
       to: customerEmail,
-      subject: `🎉 Order Confirmed! #${orderData.orderId} - ShopEase`,
+      subject: `🎉 Order Confirmed! #${orderData.orderId} - Rushk`,
       html: emailContent
     });
 
@@ -656,14 +664,14 @@ export const sendOrderStatusUpdateEmail = async (
       // Fallback to console logging
       console.log('📧 Order Status Update Email (Console Fallback):');
       console.log('To:', customerEmail);
-      console.log('Subject: Order Status Update - ShopEase');
+      console.log('Subject: Order Status Update - Rushk');
       return { success: true, message: 'Email logged to console (SMTP not configured)' };
     }
 
     await transporter.sendMail({
       from: `"ShopEase" <${process.env.SMTP_USER}>`,
       to: customerEmail,
-      subject: `📋 Order Status Updated to ${newStatus} - ShopEase`,
+      subject: `📋 Order Status Updated to ${newStatus} - Rushk`,
       html: `
         <div style="font-family: Arial, sans-serif; padding: 20px; background: #f8fafc; border-radius: 10px;">
           <h2 style="color: #1e40af;">Order Status Updated!</h2>

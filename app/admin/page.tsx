@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { 
   Package, Users, DollarSign, TrendingUp, 
   ShoppingCart, LogOut,
-  ArrowRight, RefreshCw, Calendar, MapPin
+  ArrowRight, RefreshCw, Calendar, MapPin, MessageSquare
 } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { ModernLoader } from '@/components/ui/ModernLoader';
@@ -279,7 +279,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -352,6 +352,32 @@ export default function AdminDashboard() {
                 </p>
                 <div className="flex items-center text-purple-600 dark:text-purple-400 text-sm font-medium">
                   <span>Open Studio</span>
+                  <ArrowRight size={16} className="ml-1" />
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.0 }}
+            className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 cursor-pointer"
+            onClick={() => router.push('/admin/reviews')}
+          >
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900/20 rounded-xl flex items-center justify-center">
+                <MessageSquare size={32} className="text-orange-600 dark:text-orange-400" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                  Manage Reviews
+                </h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
+                  Approve, reject, and respond to customer reviews
+                </p>
+                <div className="flex items-center text-orange-600 dark:text-orange-400 text-sm font-medium">
+                  <span>Manage Reviews</span>
                   <ArrowRight size={16} className="ml-1" />
                 </div>
               </div>

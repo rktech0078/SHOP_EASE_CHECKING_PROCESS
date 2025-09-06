@@ -35,6 +35,9 @@ export async function GET(request: NextRequest) {
         items[] {
           _id,
           productId,
+          productName,
+          selectedSize,
+          selectedColor,
           product-> {
             _id,
             name,
@@ -99,6 +102,9 @@ export async function GET(request: NextRequest) {
       items: (order.items as Array<Record<string, unknown>>)?.map((item: Record<string, unknown>) => ({
         _id: item._id as string,
         productId: (item.productId as string) || (item.product as Record<string, unknown>)?._id as string,
+        productName: item.productName as string,
+        selectedSize: item.selectedSize as string,
+        selectedColor: item.selectedColor as string,
         product: item.product,
         quantity: item.quantity as number,
         price: (item.price as number) || (item.originalPrice as number) || 0

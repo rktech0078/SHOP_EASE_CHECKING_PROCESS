@@ -7,8 +7,8 @@ import { urlFor } from '@/sanity/lib/image';
 import { CategoryCardSkeleton } from '@/components/ui/skeleton';
 
 export const metadata: Metadata = {
-  title: 'Categories - ShopEase',
-  description: 'Browse all product categories at ShopEase',
+  title: 'Categories - Rushk',
+description: 'Browse all product categories at Rushk',
 };
 
 export const revalidate = 3600; // Revalidate at most every hour

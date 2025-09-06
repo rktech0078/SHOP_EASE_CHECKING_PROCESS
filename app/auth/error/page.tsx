@@ -121,10 +121,10 @@ function AuthErrorContent() {
           </p>
           <div className="flex items-center justify-center gap-4 text-sm">
             <a 
-              href="mailto:support@shopease.com" 
+              href="mailto:support@rushk.com" 
               className="text-blue-600 dark:text-blue-400 hover:underline"
             >
-              support@shopease.com
+              support@rushk.com
             </a>
             <span className="text-gray-400">|</span>
             <span className="text-gray-600 dark:text-gray-400">

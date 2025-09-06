@@ -159,7 +159,7 @@ export default function AdminLoginPage() {
         {/* Footer */}
         <div className="mt-8 text-center">
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Secure admin access for ShopEase management
+            Secure admin access for Rushk management
           </p>
         </div>
       </div>

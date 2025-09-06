@@ -231,7 +231,7 @@ export default function SignUpPage() {
             Create Account
           </h2>
           <p className="text-gray-600 text-lg">
-            Join ShopEase and start shopping today
+            Join Rushk and start shopping today
           </p>
         </div>
 

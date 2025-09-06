@@ -1,5 +1,22 @@
 import { PortableTextBlock } from '@portabletext/types';
 
+// Product Size Type
+export interface ProductSize {
+  size: string;
+  stock: number;
+}
+
+// Product Color Type
+export interface ProductColor {
+  name: string;
+  value: string;
+  image?: {
+    asset: {
+      _ref: string;
+    };
+  };
+}
+
 // Product Type
 export interface Product {
   category: any;
@@ -28,6 +45,8 @@ export interface Product {
   features?: string[];
   inStock: boolean;
   featured: boolean;
+  sizes?: ProductSize[];
+  colors?: ProductColor[];
 }
 
 // Category Type
@@ -78,6 +97,8 @@ export interface OrderItem {
   price: number;
   discount?: number;
   finalPrice: number;
+  selectedSize?: string;
+  selectedColor?: string;
   productImage?: {
     asset: {
       _ref: string;
@@ -157,4 +178,57 @@ export interface RegisterData {
     zipCode?: string;
     country?: string;
   };
+}
+
+// Review Types
+export interface Review {
+  _id: string;
+  _createdAt: string;
+  _updatedAt: string;
+  product: {
+    _id: string;
+    name: string;
+    slug: {
+      current: string;
+    };
+  };
+  user: {
+    _id: string;
+    fullName: string;
+    email: string;
+  };
+  rating: number;
+  title?: string;
+  comment?: string;
+  images?: {
+    asset: {
+      _ref: string;
+    };
+  }[];
+  verifiedPurchase: boolean;
+  helpfulVotes: number;
+  notHelpfulVotes: number;
+  status: 'pending' | 'approved' | 'rejected';
+  adminResponse?: string;
+}
+
+export interface CreateReviewData {
+  productId: string;
+  rating: number;
+  title?: string;
+  comment?: string;
+  images?: File[];
+}
+
+export interface ReviewStats {
+  averageRating: number;
+  totalReviews: number;
+  ratingDistribution: {
+    1: number;
+    2: number;
+    3: number;
+    4: number;
+    5: number;
+  };
+  verifiedReviews: number;
 }

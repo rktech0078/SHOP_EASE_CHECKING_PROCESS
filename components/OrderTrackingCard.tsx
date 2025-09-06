@@ -19,6 +19,9 @@ import { urlFor } from '@/sanity/lib/image';
 interface OrderItem {
   _id: string;
   productId: string;
+  productName?: string;
+  selectedSize?: string;
+  selectedColor?: string;
   product: {
     _id: string;
     name: string;
@@ -304,11 +307,25 @@ export default function OrderTrackingCard({ order }: OrderTrackingCardProps) {
                       )}
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-gray-900 dark:text-gray-100 truncate">
-                          {item.product?.name || 'Product Name'}
+                          {item.productName || item.product?.name || 'Product Name'}
                         </p>
                         <p className="text-sm text-gray-500 dark:text-gray-400">
                           Qty: {item.quantity} × {formatCurrency(item.price)}
                         </p>
+                        {(item.selectedSize || item.selectedColor) && (
+                          <div className="flex gap-2 mt-1">
+                            {item.selectedSize && (
+                              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                                📏 {item.selectedSize}
+                              </span>
+                            )}
+                            {item.selectedColor && (
+                              <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
+                                🎨 {item.selectedColor}
+                              </span>
+                            )}
+                          </div>
+                        )}
                       </div>
                       <div className="text-right flex-shrink-0">
                         <p className="font-semibold text-gray-900 dark:text-gray-100">
@@ -471,7 +488,7 @@ export default function OrderTrackingCard({ order }: OrderTrackingCardProps) {
                       )}
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-gray-900 dark:text-gray-100 truncate">
-                          {item.product?.name || 'Product Name'}
+                          {item.productName || item.product?.name || 'Product Name'}
                         </p>
                         <p className="text-sm text-gray-500 dark:text-gray-400">
                           Quantity: {item.quantity}
@@ -479,6 +496,20 @@ export default function OrderTrackingCard({ order }: OrderTrackingCardProps) {
                         <p className="text-sm text-gray-500 dark:text-gray-400">
                           Price: {formatCurrency(item.price)}
                         </p>
+                        {(item.selectedSize || item.selectedColor) && (
+                          <div className="flex gap-2 mt-2">
+                            {item.selectedSize && (
+                              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300">
+                                📏 Size: {item.selectedSize}
+                              </span>
+                            )}
+                            {item.selectedColor && (
+                              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-300">
+                                🎨 Color: {item.selectedColor}
+                              </span>
+                            )}
+                          </div>
+                        )}
                       </div>
                       <div className="text-right flex-shrink-0">
                         <p className="font-semibold text-gray-900 dark:text-gray-100">

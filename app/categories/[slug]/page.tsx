@@ -19,14 +19,14 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   
   if (!category) {
     return {
-      title: 'Category Not Found - ShopEase',
+      title: 'Category Not Found - Rushk',
       description: 'The requested category could not be found',
     };
   }
 
   return {
-    title: `${category.name} - ShopEase`,
-    description: category.description || `Browse ${category.name} products at ShopEase`,
+    title: `${category.name} - Rushk`,
+description: category.description || `Browse ${category.name} products at Rushk`,
   };
 }
 

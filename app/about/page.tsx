@@ -3,8 +3,8 @@ import Image from 'next/image';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'About Us - ShopEase',
-  description: 'Learn more about ShopEase, our mission, vision, and the team behind your favorite online shopping destination.',
+  title: 'About Us - Rushk',
+description: 'Learn more about Rushk, our mission, vision, and the team behind your favorite online shopping destination.',
 };
 
 export default function AboutPage() {
@@ -17,7 +17,7 @@ export default function AboutPage() {
         </div>
         <div className="relative h-full flex items-center justify-center text-center px-4">
           <div className="max-w-3xl animate-fade-in">
-            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">About ShopEase</h1>
+            <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">About Rushk</h1>
             <p className="text-lg md:text-xl text-white/90">
               Your trusted partner for quality products and exceptional shopping experience
             </p>
@@ -34,7 +34,7 @@ export default function AboutPage() {
                 Our Story
               </h2>
               <p className="text-gray-700 dark:text-gray-300 mb-4">
-                Founded in 2023, ShopEase began with a simple mission: to make online shopping truly easy and enjoyable. 
+                Founded in 2023, Rushk began with a simple mission: to make online shopping truly easy and enjoyable. 
                 We believe that shopping should be a pleasure, not a chore.
               </p>
               <p className="text-gray-700 dark:text-gray-300">
@@ -47,7 +47,7 @@ export default function AboutPage() {
               <div className="absolute inset-0 bg-gray-200 dark:bg-gray-800 animate-pulse"></div>
               <Image 
                 src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80" 
-                alt="ShopEase team working" 
+                alt="Rushk team working" 
                 fill 
                 className="object-cover"
               />
@@ -160,7 +160,7 @@ export default function AboutPage() {
             Have questions or feedback? We&apos;d love to hear from you. Our customer support team is always ready to help.
           </p>
           <a 
-            href="mailto:contact@shopease.com" 
+            href="mailto:contact@rushk.com" 
             className="inline-block bg-white text-blue-600 font-medium px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors duration-300"
           >
             Contact Us

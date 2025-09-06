@@ -219,7 +219,7 @@ function OrderSuccessContent() {
               <Mail size={20} className="text-blue-600 dark:text-blue-400" />
               <div>
                 <p className="font-medium text-gray-900 dark:text-gray-100">Email Support</p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">support@shopease.com</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">support@rushk.com</p>
               </div>
             </div>
             

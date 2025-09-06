@@ -30,6 +30,9 @@ import DashboardStats from '@/components/DashboardStats';
 interface OrderItem {
   _id: string;
   productId: string;
+  productName?: string;
+  selectedSize?: string;
+  selectedColor?: string;
   product: {
     _id: string;
     name: string;

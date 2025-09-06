@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://rushk.pk/sitemap.xml</loc><lastmod>2025-09-01T13:20:07.009Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://rushk.pk/admin</loc><lastmod>2025-09-01T13:20:07.013Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://rushk.pk/auth/signin</loc><lastmod>2025-09-01T13:20:07.013Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://rushk.pk/cart</loc><lastmod>2025-09-01T13:20:07.013Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://rushk.pk/auth/signup</loc><lastmod>2025-09-01T13:20:07.013Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://rushk.pk/checkout</loc><lastmod>2025-09-01T13:20:07.013Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://rushk.pk/contact</loc><lastmod>2025-09-01T13:20:07.013Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://rushk.pk/dashboard</loc><lastmod>2025-09-01T13:20:07.013Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://rushk.pk/order-success</loc><lastmod>2025-09-01T13:20:07.013Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://rushk.pk/wishlist</loc><lastmod>2025-09-01T13:20:07.013Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://rushk.pk/about</loc><lastmod>2025-09-01T13:20:07.013Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://rushk.pk/categories</loc><lastmod>2025-09-01T13:20:07.014Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://rushk.pk</loc><lastmod>2025-09-01T13:20:07.014Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://rushk.pk/products</loc><lastmod>2025-09-01T13:20:07.014Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://rushk.pk/auth/error</loc><lastmod>2025-09-01T13:20:07.014Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://rushk.pk/sitemap.xml</loc><lastmod>2025-09-06T10:20:35.142Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://rushk.pk/admin</loc><lastmod>2025-09-06T10:20:35.143Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://rushk.pk/auth/error</loc><lastmod>2025-09-06T10:20:35.143Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://rushk.pk/auth/signin</loc><lastmod>2025-09-06T10:20:35.143Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://rushk.pk/auth/signup</loc><lastmod>2025-09-06T10:20:35.143Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://rushk.pk/cart</loc><lastmod>2025-09-06T10:20:35.143Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://rushk.pk/checkout</loc><lastmod>2025-09-06T10:20:35.143Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://rushk.pk/contact</loc><lastmod>2025-09-06T10:20:35.143Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://rushk.pk/dashboard</loc><lastmod>2025-09-06T10:20:35.143Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://rushk.pk/order-success</loc><lastmod>2025-09-06T10:20:35.143Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://rushk.pk/wishlist</loc><lastmod>2025-09-06T10:20:35.143Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://rushk.pk/about</loc><lastmod>2025-09-06T10:20:35.143Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://rushk.pk/categories</loc><lastmod>2025-09-06T10:20:35.143Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://rushk.pk</loc><lastmod>2025-09-06T10:20:35.143Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://rushk.pk/products</loc><lastmod>2025-09-06T10:20:35.143Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>

@@ -164,7 +164,7 @@ export default function SignInPage() {
             Welcome Back
           </h1>
           <p className="text-gray-600 text-lg font-medium">
-            Sign in to your ShopEase account
+            Sign in to your Rushk account
           </p>
         </div>
 
@@ -290,7 +290,7 @@ export default function SignInPage() {
                 </div>
                 <div className="relative flex justify-center text-sm">
                   <span className="px-6 bg-white/90 backdrop-blur-sm text-gray-500 font-bold uppercase tracking-wide">
-                    New to ShopEase?
+                    New to Rushk?
                   </span>
                 </div>
               </div>
@@ -315,7 +315,7 @@ export default function SignInPage() {
             className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700 transition-all duration-300 hover:scale-105 group"
           >
             <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform duration-300" />
-            Back to ShopEase
+            Back to Rushk
           </Link>
         </div>
       </div>

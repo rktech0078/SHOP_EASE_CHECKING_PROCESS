@@ -1,6 +1,7 @@
 import { groq } from 'next-sanity';
 import { client } from './client';
-import { Product, Category, Banner, Order, OrderItem } from '../../types';
+import { adminClient } from './adminClient';
+import { Product, Category, Banner, Order, OrderItem, Review, ReviewStats } from '../../types';
 
 // Enhanced client with error handling
 
@@ -147,7 +148,9 @@ export async function getProducts(): Promise<Product[]> {
         description,
         features,
         inStock,
-        featured
+        featured,
+        sizes,
+        colors
       }`
     );
     return handleEmptyResults(products, 'products');
@@ -173,7 +176,9 @@ export async function getFeaturedProducts(): Promise<Product[]> {
         description,
         features,
         inStock,
-        featured
+        featured,
+        sizes,
+        colors
       }`
     );
     return handleEmptyResults(products, 'featured products');
@@ -199,7 +204,9 @@ export async function getProduct(slug: string): Promise<Product | null> {
         description,
         features,
         inStock,
-        featured
+        featured,
+        sizes,
+        colors
       }`,
       { slug }
     );
@@ -310,6 +317,187 @@ export async function getActiveBanners(): Promise<Banner[]> {
     return handleEmptyResults(banners, 'active banners');
   } catch (error) {
     console.error('Error in getActiveBanners:', error);
+    return [];
+  }
+}
+
+// Review Functions
+export async function createReview(reviewData: any): Promise<any> {
+  try {
+    const result = await adminClient.create({
+      _type: 'review',
+      product: {
+        _type: 'reference',
+        _ref: reviewData.productId,
+      },
+      user: {
+        _type: 'reference',
+        _ref: reviewData.userId,
+      },
+      rating: reviewData.rating,
+      title: reviewData.title,
+      comment: reviewData.comment,
+      verifiedPurchase: reviewData.verifiedPurchase || false,
+      helpfulVotes: 0,
+      notHelpfulVotes: 0,
+      status: 'approved', // Changed from 'pending' to 'approved' for immediate display
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    });
+
+    return result;
+  } catch (error) {
+    console.error('Error creating review:', error);
+    throw new Error('Failed to create review');
+  }
+}
+
+export async function getProductReviews(productId: string): Promise<Review[]> {
+  try {
+    const reviews = await fetchWithErrorHandling<Review[]>(
+      groq`*[_type == "review" && product._ref == $productId && status == "approved"] | order(_createdAt desc) {
+        _id,
+        _createdAt,
+        _updatedAt,
+        product->{
+          _id,
+          name,
+          slug
+        },
+        user->{
+          _id,
+          fullName,
+          email
+        },
+        rating,
+        title,
+        comment,
+        images,
+        verifiedPurchase,
+        helpfulVotes,
+        notHelpfulVotes,
+        status,
+        adminResponse
+      }`,
+      { productId }
+    );
+    
+    return handleEmptyResults(reviews, `reviews for product ${productId}`);
+  } catch (error) {
+    console.error(`Error in getProductReviews for productId ${productId}:`, error);
+    return [];
+  }
+}
+
+export async function getReviewStats(productId: string): Promise<ReviewStats> {
+  try {
+    // First get all reviews to calculate stats
+    const reviews = await fetchWithErrorHandling<any[]>(
+      groq`*[_type == "review" && product._ref == $productId && status == "approved"] {
+        rating,
+        verifiedPurchase
+      }`,
+      { productId }
+    );
+    
+    if (!reviews || reviews.length === 0) {
+      return {
+        averageRating: 0,
+        totalReviews: 0,
+        ratingDistribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+        verifiedReviews: 0,
+      };
+    }
+    
+    // Calculate average rating
+    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+    const averageRating = totalRating / reviews.length;
+    
+    // Calculate rating distribution
+    const ratingDistribution = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    reviews.forEach(review => {
+      if (ratingDistribution[review.rating as keyof typeof ratingDistribution] !== undefined) {
+        ratingDistribution[review.rating as keyof typeof ratingDistribution]++;
+      }
+    });
+    
+    // Count verified reviews
+    const verifiedReviews = reviews.filter(review => review.verifiedPurchase).length;
+    
+    return {
+      averageRating: Math.round(averageRating * 10) / 10, // Round to 1 decimal place
+      totalReviews: reviews.length,
+      ratingDistribution,
+      verifiedReviews,
+    };
+  } catch (error) {
+    console.error(`Error in getReviewStats for productId ${productId}:`, error);
+    return {
+      averageRating: 0,
+      totalReviews: 0,
+      ratingDistribution: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+      verifiedReviews: 0,
+    };
+  }
+}
+
+export async function updateReviewVotes(reviewId: string, helpful: boolean): Promise<void> {
+  try {
+    const review = await adminClient.getDocument(reviewId);
+    if (!review) {
+      throw new Error('Review not found');
+    }
+    
+    const updateData: any = {};
+    
+    if (helpful) {
+      updateData.helpfulVotes = (review.helpfulVotes || 0) + 1;
+    } else {
+      updateData.notHelpfulVotes = (review.notHelpfulVotes || 0) + 1;
+    }
+    
+    updateData.updatedAt = new Date().toISOString();
+    
+    await adminClient.patch(reviewId).set(updateData).commit();
+  } catch (error) {
+    console.error('Error updating review votes:', error);
+    throw new Error('Failed to update review votes');
+  }
+}
+
+export async function getUserReviews(userId: string): Promise<Review[]> {
+  try {
+    const reviews = await fetchWithErrorHandling<Review[]>(
+      groq`*[_type == "review" && user._ref == $userId] | order(_createdAt desc) {
+        _id,
+        _createdAt,
+        _updatedAt,
+        product->{
+          _id,
+          name,
+          slug
+        },
+        user->{
+          _id,
+          fullName,
+          email
+        },
+        rating,
+        title,
+        comment,
+        images,
+        verifiedPurchase,
+        helpfulVotes,
+        notHelpfulVotes,
+        status,
+        adminResponse
+      }`,
+      { userId }
+    );
+    
+    return handleEmptyResults(reviews, `reviews by user ${userId}`);
+  } catch (error) {
+    console.error(`Error in getUserReviews for userId ${userId}:`, error);
     return [];
   }
 }

@@ -15,11 +15,13 @@ interface Product {
 interface CartItem {
   product: Product;
   quantity: number;
+  selectedSize?: string | undefined;
+  selectedColor?: string | undefined;
 }
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (product: Product, quantity?: number) => void;
+  addToCart: (product: Product, quantity?: number, selectedSize?: string, selectedColor?: string) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
@@ -47,29 +49,31 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Load cart from localStorage on mount
   useEffect(() => {
-    try {
-      const savedCart = localStorage.getItem('shopEaseCart');
+    if (typeof window !== 'undefined') {
+      const savedCart = localStorage.getItem('cart');
       if (savedCart) {
-        const parsedCart = JSON.parse(savedCart);
-        if (Array.isArray(parsedCart)) {
-          // Validate cart data structure
-          const validCart = parsedCart.filter(item => 
-            item && 
-            item.product && 
-            item.product._id && 
-            item.product.name && 
-            typeof item.product.price === 'number' &&
-            typeof item.quantity === 'number' &&
-            item.quantity > 0
-          );
-          setCartItems(validCart);
+        try {
+          const parsedCart = JSON.parse(savedCart);
+          // Validate cart items have required product properties
+          const validCartItems = parsedCart.filter((item: CartItem) => {
+            return item.product && 
+                   item.product._id && 
+                   item.product.name && 
+                   typeof item.product.price === 'number' &&
+                   typeof item.quantity === 'number' &&
+                   item.quantity > 0;
+          });
+          
+          if (validCartItems.length !== parsedCart.length) {
+            console.log('🧹 Removed invalid cart items');
+          }
+          
+          setCartItems(validCartItems);
+        } catch (error) {
+          console.error('Error parsing saved cart:', error);
+          localStorage.removeItem('cart');
         }
       }
-    } catch (error) {
-      console.error('Error loading cart from localStorage:', error);
-      // Clear invalid cart data
-      localStorage.removeItem('shopEaseCart');
-    } finally {
       setIsInitialized(true);
     }
   }, []);
@@ -78,7 +82,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     if (isInitialized) {
       try {
-        localStorage.setItem('shopEaseCart', JSON.stringify(cartItems));
+        localStorage.setItem('cart', JSON.stringify(cartItems));
       } catch (error) {
         console.error('Error saving cart to localStorage:', error);
       }
@@ -110,36 +114,54 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const { subtotal, tax, shipping, discount, totalPrice } = calculateTotals();
 
   // Add item to cart
-  const addToCart = useCallback((product: Product, quantity: number = 1) => {
+  const addToCart = useCallback((product: Product, quantity: number = 1, selectedSize?: string, selectedColor?: string) => {
     if (!product || !product._id || quantity <= 0) {
       console.error('Invalid product or quantity');
       return;
     }
 
     setCartItems(prevItems => {
-      const existingItem = prevItems.find(item => item.product._id === product._id);
+      // Check for existing item with same product, size, and color
+      const existingItem = prevItems.find(item => 
+        item.product._id === product._id && 
+        item.selectedSize === selectedSize && 
+        item.selectedColor === selectedColor
+      );
       
       if (existingItem) {
         // Update existing item quantity
         return prevItems.map(item =>
-          item.product._id === product._id
+          item.product._id === product._id && 
+          item.selectedSize === selectedSize && 
+          item.selectedColor === selectedColor
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
       } else {
         // Add new item
-        return [...prevItems, { product, quantity }];
+        const newItem: CartItem = { 
+          product, 
+          quantity, 
+          selectedSize: selectedSize, 
+          selectedColor: selectedColor 
+        };
+        return [...prevItems, newItem];
       }
     });
   }, []);
 
   // Remove item from cart
-  const removeFromCart = useCallback((productId: string) => {
-    if (!productId) return;
-    
-    setCartItems(prevItems => 
-      prevItems.filter(item => item.product._id !== productId)
-    );
+  const removeFromCart = useCallback((productId: string, selectedSize?: string, selectedColor?: string) => {
+    setCartItems(prevItems => prevItems.filter(item => {
+      // If size/color specified, only remove exact match
+      if (selectedSize || selectedColor) {
+        return !(item.product._id === productId && 
+                item.selectedSize === selectedSize && 
+                item.selectedColor === selectedColor);
+      }
+      // Otherwise remove all items with this product ID
+      return item.product._id !== productId;
+    }));
   }, []);
 
   // Update item quantity
@@ -158,7 +180,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Clear entire cart
   const clearCart = useCallback(() => {
     setCartItems([]);
-    localStorage.removeItem('shopEaseCart');
+    localStorage.removeItem('cart');
   }, []);
 
   // Get total number of items

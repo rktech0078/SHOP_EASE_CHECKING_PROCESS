@@ -13,6 +13,8 @@ import { formatPrice } from '@/lib/utils';
 import { useCart } from '@/context/CartContext';
 import Link from 'next/link';
 import { Product as GlobalProduct } from '@/types';
+import ReviewSection from '@/components/ReviewSection';
+import ProductVariantSelector from '@/components/ProductVariantSelector';
 
 export const dynamic = 'force-dynamic';
 
@@ -29,6 +31,8 @@ export default function ProductPage({ params }: ProductPageProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [activeTab, setActiveTab] = useState('description');
   const [addToCartLoading, setAddToCartLoading] = useState(false);
+  const [selectedSize, setSelectedSize] = useState<string>('');
+  const [selectedColor, setSelectedColor] = useState<string>('');
   const { addToCart } = useCart();
 
   useEffect(() => {
@@ -90,7 +94,7 @@ export default function ProductPage({ params }: ProductPageProps) {
   const handleAddToCart = async () => {
     setAddToCartLoading(true);
     try {
-      await addToCart(product, quantity);
+      await addToCart(product, quantity, selectedSize, selectedColor);
       setTimeout(() => setAddToCartLoading(false), 1000);
     } catch {
       setAddToCartLoading(false);
@@ -273,6 +277,16 @@ export default function ProductPage({ params }: ProductPageProps) {
                     )}
                   </div>
                 </div>
+
+                {/* Product Variants */}
+                <ProductVariantSelector
+                  sizes={product.sizes || []}
+                  colors={product.colors || []}
+                  selectedSize={selectedSize}
+                  selectedColor={selectedColor}
+                  onSizeChange={setSelectedSize}
+                  onColorChange={setSelectedColor}
+                />
 
                 {/* Stock & Shipping Info */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -526,6 +540,14 @@ export default function ProductPage({ params }: ProductPageProps) {
                </div>
             </div>
           </div>
+        </div>
+
+        {/* Reviews Section */}
+        <div className="mt-8">
+          <ReviewSection 
+            productId={product._id} 
+            productName={product.name} 
+          />
         </div>
       </div>
     </div>

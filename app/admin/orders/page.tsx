@@ -19,6 +19,9 @@ import { toast } from 'react-hot-toast';
 interface OrderItem {
   _id: string;
   productId: string | { _ref: string };
+  productName?: string;
+  selectedSize?: string;
+  selectedColor?: string;
   product?: {
     _id: string;
     name: string;
@@ -448,9 +451,16 @@ export default function AdminOrdersPage() {
                         <div className="space-y-2">
                           {order.items.slice(0, 2).map((item, index) => (
                             <div key={index} className="flex items-center justify-between text-sm">
-                              <span className="text-gray-600 dark:text-gray-400">
-                                {item.product?.name || `Product ${index + 1}`}
-                              </span>
+                              <div className="text-gray-600 dark:text-gray-400">
+                                <div>{item.productName || item.product?.name || `Product ${index + 1}`}</div>
+                                {(item.selectedSize || item.selectedColor) && (
+                                  <div className="text-xs text-blue-600 dark:text-blue-400 mt-1">
+                                    {item.selectedSize && `Size: ${item.selectedSize}`}
+                                    {item.selectedSize && item.selectedColor && ' • '}
+                                    {item.selectedColor && `Color: ${item.selectedColor}`}
+                                  </div>
+                                )}
+                              </div>
                               <span className="font-medium text-gray-900 dark:text-white">
                                 {formatPrice(item.price)} × {item.quantity}
                               </span>
@@ -622,8 +632,24 @@ export default function AdminOrdersPage() {
                         {index + 1}
                       </div>
                       <div className="flex-1">
-                        <p className="font-medium text-gray-900 dark:text-white">Product ID: {typeof item.productId === 'string' ? item.productId : item.productId._ref}</p>
+                        <p className="font-medium text-gray-900 dark:text-white">
+                          {item.productName || `Product ${index + 1}`}
+                        </p>
                         <p className="text-sm text-gray-600 dark:text-gray-400">Quantity: {item.quantity}</p>
+                        {(item.selectedSize || item.selectedColor) && (
+                          <div className="mt-2 space-y-1">
+                            {item.selectedSize && (
+                              <div className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 rounded-full text-xs font-medium">
+                                📏 Size: {item.selectedSize}
+                              </div>
+                            )}
+                            {item.selectedColor && (
+                              <div className="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300 rounded-full text-xs font-medium ml-2">
+                                🎨 Color: {item.selectedColor}
+                              </div>
+                            )}
+                          </div>
+                        )}
                       </div>
                       <div className="text-right">
                         <p className="font-semibold text-gray-900 dark:text-white">{formatPrice(item.price)}</p>

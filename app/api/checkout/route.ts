@@ -74,6 +74,42 @@ export async function POST(request: NextRequest) {
 
     console.log('✅ Validation passed, fetching user details...');
 
+    // Validate product references exist
+    const productIds = cartItems.map(item => item.product._id);
+    const existingProducts = await adminClient.fetch(`
+      *[_type == "product" && _id in $productIds] {
+        _id,
+        name,
+        price,
+        inStock
+      }
+    `, { productIds });
+
+    console.log('🔍 Checking products:', { requested: productIds, found: existingProducts.map((p: { _id: string }) => p._id) });
+
+    // Check for missing products
+    const missingProducts = productIds.filter(id => 
+      !existingProducts.find((p: { _id: string }) => p._id === id)
+    );
+
+    if (missingProducts.length > 0) {
+      console.log('❌ Missing products:', missingProducts);
+      return NextResponse.json(
+        { error: `Products not found: ${missingProducts.join(', ')}` },
+        { status: 400 }
+      );
+    }
+
+    // Check for out of stock products
+    const outOfStockProducts = existingProducts.filter((p: { inStock: boolean }) => !p.inStock);
+    if (outOfStockProducts.length > 0) {
+      console.log('❌ Out of stock products:', outOfStockProducts.map((p: { name: string }) => p.name));
+      return NextResponse.json(
+        { error: `Products out of stock: ${outOfStockProducts.map((p: { name: string }) => p.name).join(', ')}` },
+        { status: 400 }
+      );
+    }
+
     // Fetch user details
     const user = await adminClient.fetch(`
       *[_type == "user" && email == $email][0] {
@@ -112,6 +148,8 @@ export async function POST(request: NextRequest) {
       productName: item.product.name,
       productSlug: item.product.slug?.current || item.product._id,
       quantity: item.quantity,
+      selectedSize: item.selectedSize || null,
+      selectedColor: item.selectedColor || null,
       price: item.product.discount 
         ? item.product.price - (item.product.price * item.product.discount / 100)
         : item.product.price,

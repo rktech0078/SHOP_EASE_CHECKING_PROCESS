@@ -21,7 +21,7 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <h3 className="text-2xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-pink-500">
-              ShopEase
+              Rushk
             </h3>
             <p className="text-gray-700 dark:text-gray-300 mb-5 leading-relaxed">
               Your one-stop destination for quality products at affordable
@@ -131,10 +131,10 @@ const Footer = () => {
               <li className="flex items-center space-x-3">
                 <Mail size={20} className="text-red-500" />
                 <a
-                  href="mailto:info@shopease.com"
+                  href="mailto:info@rushk.com"
                   className="hover:text-indigo-600 dark:hover:text-white transition"
                 >
-                  info@shopease.com
+                  info@rushk.com
                 </a>
               </li>
             </ul>
@@ -144,7 +144,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-gray-300/30 dark:border-gray-700 mt-10 pt-6 text-center text-sm md:text-base text-gray-600 dark:text-gray-400">
           <p>
-            &copy; {currentYear} ShopEase. All rights reserved. | Made with{" "}
+            &copy; {currentYear} Rushk. All rights reserved. | Made with{" "}
             <span className="text-red-500 animate-pulse">❤</span> for customers
           </p>
         </div>
