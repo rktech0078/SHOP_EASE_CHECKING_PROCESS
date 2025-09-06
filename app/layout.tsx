@@ -1,3 +1,4 @@
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
@@ -27,10 +28,12 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://rushk.pk'),
+  metadataBase: new URL("https://rushk.pk"),
   title: "Rushk.pk - Premium Pakistani Clothing Brand | Fashion & Style",
-  description: "Discover the latest Pakistani fashion trends at Rushk.pk. Shop premium clothing, traditional wear, modern fashion, and stylish accessories. Free shipping across Pakistan.",
-  keywords: "Pakistani clothing, Pakistani fashion, traditional wear, modern fashion, online clothing store, Pakistani dresses, shalwar kameez, western wear, fashion accessories, Pakistan fashion",
+  description:
+    "Discover the latest Pakistani fashion trends at Rushk.pk. Shop premium clothing, traditional wear, modern fashion, and stylish accessories. Free shipping across Pakistan.",
+  keywords:
+    "Pakistani clothing, Pakistani fashion, traditional wear, modern fashion, online clothing store, Pakistani dresses, shalwar kameez, western wear, fashion accessories, Pakistan fashion",
   authors: [{ name: "Rushk.pk Team" }],
   creator: "Rushk.pk",
   publisher: "Rushk.pk",
@@ -38,7 +41,8 @@ export const metadata: Metadata = {
   classification: "E-commerce",
   openGraph: {
     title: "Rushk.pk - Premium Pakistani Clothing Brand",
-    description: "Discover the latest Pakistani fashion trends at Rushk.pk. Shop premium clothing, traditional wear, modern fashion, and stylish accessories.",
+    description:
+      "Discover the latest Pakistani fashion trends at Rushk.pk. Shop premium clothing, traditional wear, modern fashion, and stylish accessories.",
     url: "https://rushk.pk",
     siteName: "Rushk.pk",
     images: [
@@ -55,7 +59,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Rushk.pk - Premium Pakistani Clothing Brand",
-    description: "Discover the latest Pakistani fashion trends at Rushk.pk. Shop premium clothing, traditional wear, modern fashion, and stylish accessories.",
+    description:
+      "Discover the latest Pakistani fashion trends at Rushk.pk. Shop premium clothing, traditional wear, modern fashion, and stylish accessories.",
     images: ["/images/rushk-twitter-image.jpg"],
     creator: "@rushkpk",
     site: "@rushkpk",
@@ -66,9 +71,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   alternates: {
@@ -104,29 +109,30 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Rushk.pk" />
-        
+
         <StructuredData
           type="Organization"
           data={{
             name: "Rushk.pk",
             url: "https://rushk.pk",
             logo: "https://rushk.pk/images/rushk-logo.png",
-            description: "Premium Pakistani clothing brand offering traditional and modern fashion",
+            description:
+              "Premium Pakistani clothing brand offering traditional and modern fashion",
             address: {
               "@type": "PostalAddress",
               addressCountry: "PK",
-              addressLocality: "Pakistan"
+              addressLocality: "Pakistan",
             },
             contactPoint: {
               "@type": "ContactPoint",
               telephone: "+92-XXX-XXXXXXX",
-              contactType: "customer service"
+              contactType: "customer service",
             },
             sameAs: [
               "https://facebook.com/rushkpk",
               "https://instagram.com/rushkpk",
-              "https://twitter.com/rushkpk"
-            ]
+              "https://twitter.com/rushkpk",
+            ],
           }}
         />
         <StructuredData
@@ -138,8 +144,8 @@ export default function RootLayout({
             potentialAction: {
               "@type": "SearchAction",
               target: "https://rushk.pk/search?q={search_term_string}",
-              "query-input": "required name=search_term_string"
-            }
+              "query-input": "required name=search_term_string",
+            },
           }}
         />
       </head>
@@ -152,27 +158,28 @@ export default function RootLayout({
                   <InitialLoader />
                   <Navbar />
                   <main className="pt-16 min-h-screen">{children}</main>
+                  <SpeedInsights />
                   <Footer />
-                        </WishlistProvider>
-      </CartProvider>
-    </LoadingProvider>
-  </AuthProvider>
-</NextAuthProvider>
+                </WishlistProvider>
+              </CartProvider>
+            </LoadingProvider>
+          </AuthProvider>
+        </NextAuthProvider>
 
-{/* Google Analytics */}
-<Script
-  src="https://www.googletagmanager.com/gtag/js?id=G-HT2SBL7HRD"
-  strategy="afterInteractive"
-/>
-<Script id="google-analytics" strategy="afterInteractive">
-  {`
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-HT2SBL7HRD"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-HT2SBL7HRD');
   `}
-</Script>
-</body>
+        </Script>
+      </body>
     </html>
   );
 }
